@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-05 20:07:37
+* @Last Modified time: 2015-05-06 09:47:10
 */
 
 'use strict';
@@ -33,11 +33,12 @@
    * @param {angular} $scope
    */
   var LoginCtrl = function ($scope, $window, $location, AuthFactory) {
-    $scope.isUser = true;
+    $scope.isUser = false;
 
     $scope.user = {};
 
-    $scope.signup = function() {
+    $scope.signin = function() {
+      console.log('login module signin func called');
       AuthFactory.signin($scope.user)
         .then(function (token) {
           $window.localStorage.setItem('com.trybe', token);
@@ -48,7 +49,8 @@
         });
     };
 
-    $scope.signin = function() {
+    $scope.signup = function() {
+      console.log('login module signup func called');
       AuthFactory.signup($scope.user)
         .then(function (token) {
           $window.localStorage.setItem('com.trybe', token);

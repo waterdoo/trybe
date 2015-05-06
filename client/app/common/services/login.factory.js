@@ -1,8 +1,8 @@
 /*
 * @Author: vincetam
 * @Date:   2015-05-05 17:51:40
-* @Last Modified by:   VINCE
-* @Last Modified time: 2015-05-05 19:13:07
+* @Last Modified by:   vincetam
+* @Last Modified time: 2015-05-06 09:43:54
 */
 
 'use strict';
@@ -46,7 +46,7 @@
 
     var signout = function () {
       $window.localStorage.removeItem('com.trybe');
-      $location.path('/signin');
+      $location.path('/login');
     };
 
     return {

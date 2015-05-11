@@ -1,8 +1,8 @@
 /*
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
-* @Last Modified by:   justinwebb
-* @Last Modified time: 2015-05-11 16:52:37
+* @Last Modified by:   vincetam
+* @Last Modified time: 2015-05-11 17:46:35
 */
 
 'use strict';
@@ -53,7 +53,7 @@
         workout = JSON.parse(localStorage.getItem(this.selection));
       }
       return workout;
-    }
+    };
 
     return {
       getWorkouts: getWorkouts,

@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 17:54:52
+* @Last Modified time: 2015-05-11 17:57:15
 */
 
 'use strict';
@@ -24,6 +24,7 @@
 
       .state('workout.log', {
         views: {
+
           // Relatively targets the 'create' view in this
           // state's parent state, 'workout',
           // <div ui-view='log'/> inside workout.tpl.html

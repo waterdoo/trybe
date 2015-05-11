@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 17:24:19
+* @Last Modified time: 2015-05-11 17:24:52
 */
 
 'use strict';
@@ -42,8 +42,8 @@
       // $scope.data.workouts = dummyData;
       FeedFactory.getWorkouts($scope.username)
         .then(function(data) {
-          $scope.data.workouts = data;
-          console.log('feed ctrl data received:', $scope.data);
+          $scope.data.workouts = data.workouts;
+          console.log('FeedCtrl\tgetWorkouts: ', $scope.data.workouts);
         })
         .catch(function(error) {
           console.error(error);

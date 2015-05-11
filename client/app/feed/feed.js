@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 16:48:44
+* @Last Modified time: 2015-05-11 16:57:26
 */
 
 'use strict';
@@ -25,13 +25,13 @@
    * @param {angular} $scope
    */
   var FeedCtrl = function ($scope, $location, $state, $window, FeedFactory, AuthFactory) {
-    $scope.data = {};
-    $scope.username = AuthFactory.getUsername();
-    console.log('Feed username:', $scope.username);
 
     $scope.init = function() {
       if(AuthFactory.isAuth()) {
         console.log('auth found user');
+        $scope.data = {};
+        $scope.username = AuthFactory.getUsername();
+        console.log('Feed username:', $scope.username);
         $scope.getAllWorkouts();
       } else {
         $state.go('login');

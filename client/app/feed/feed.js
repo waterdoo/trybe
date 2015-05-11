@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 17:24:52
+* @Last Modified time: 2015-05-11 17:26:12
 */
 
 'use strict';
@@ -40,7 +40,7 @@
 
     $scope.getAllWorkouts = function() {
       // $scope.data.workouts = dummyData;
-      FeedFactory.getWorkouts($scope.username)
+      WorkoutFactory.getWorkouts($scope.username)
         .then(function(data) {
           $scope.data.workouts = data.workouts;
           console.log('FeedCtrl\tgetWorkouts: ', $scope.data.workouts);
@@ -51,7 +51,7 @@
     };
 
     $scope.getMyWorkouts = function() {
-      FeedFactory.getMyWorkouts($scope.username) //change to $scope.userID
+      WorkoutFactory.getMyWorkouts($scope.username) //change to $scope.userID
         .then(function(data){
           $scope.data.workouts = data;
           console.log('workouts after viewMe called:', $scope.data);
@@ -67,7 +67,7 @@
     $scope.log = function(index) {
       var selection = $scope.data.workouts[index];
       console.log('selected workout:', selection);
-      FeedFactory.sendWorkout(selection);
+      WorkoutFactory.sendWorkout(selection);
       $state.go('workout');
     };
 

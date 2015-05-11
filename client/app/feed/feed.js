@@ -1,8 +1,8 @@
 /*
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
-* @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 17:27:07
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-05-11 17:27:57
 */
 
 'use strict';
@@ -28,9 +28,13 @@
     $scope.data = {};
     $scope.username = AuthFactory.getUsername();
     console.log('Feed username:', $scope.username);
+
     $scope.init = function() {
       if(AuthFactory.isAuth()) {
         console.log('auth found user');
+        $scope.data = {};
+        $scope.username = AuthFactory.getUsername();
+        console.log('Feed username:', $scope.username);
         $scope.getAllWorkouts();
       } else {
         $state.go('login');

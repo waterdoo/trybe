@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 17:48:06
+* @Last Modified time: 2015-05-11 17:50:19
 */
 
 'use strict';
@@ -58,7 +58,6 @@
       console.log('WorkoutCtrl: ', $scope.workout);
       if (!$scope.workout) { $state.go('feed'); }
     }
-
 
     $scope.printWorkoutQuanity = function (exercise) {
       var html = '';

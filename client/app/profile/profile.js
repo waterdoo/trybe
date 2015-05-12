@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-05-08 11:11:52
 * @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-11 11:41:20
+* @Last Modified time: 2015-05-11 17:19:47
 */
 
 'use strict';
@@ -26,7 +26,7 @@
    * Controls profile for client side.
    * @param {angular} $scope
    */
-  var ProfileCtrl = function ($scope, $window, $state, AuthFactory, FeedFactory, ProfileFactory) {
+  var ProfileCtrl = function ($scope, $window, $state, AuthFactory, WorkoutFactory, ProfileFactory) {
     $scope.data = {};
     $scope.data.workouts = [
           {
@@ -116,7 +116,7 @@
         ];
 
     $scope.getUserData = function() {
-      FeedFactory.getMyWorkouts()
+      WorkoutFactory.getMyWorkouts()
         .then(function(data){
           $scope.data.workouts = data.workouts;
           console.log('profile received:', $scope.data.workouts);

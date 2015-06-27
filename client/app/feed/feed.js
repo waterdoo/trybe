@@ -1,8 +1,8 @@
 /*
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
-* @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-28 19:34:14
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-06-27 13:59:50
 */
 
 'use strict';
@@ -32,8 +32,7 @@
       } else {
         $scope.data = {};
         $scope.username = AuthFactory.getUsername();
-        console.log('Feed username:', $scope.username);
-        $scope.getAllWorkouts();
+        $scope.getMyWorkouts();
       }
     };
 

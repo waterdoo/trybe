@@ -1,8 +1,8 @@
 /*
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
-* @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-29 13:44:54
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-06-27 14:15:19
 */
 'use strict';
 
@@ -129,6 +129,7 @@ module.exports = {
                 trybe: trybe.get('name'),
                 type: workout.get('type'),
                 title: workout.get('title'),
+                date: workout.get('createdAt'),
                 description: workout.get('description'),
                 exercises: exercises,
                 finalResult: workout.get('finalResult')

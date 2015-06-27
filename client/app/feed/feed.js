@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-27 13:59:50
+* @Last Modified time: 2015-06-27 14:09:25
 */
 
 'use strict';
@@ -41,7 +41,7 @@
         .then(function(data) {
           //reverse workout data so it's ordered by recency
           $scope.data.workouts = data.reverse();
-          console.log('FeedCtrl getWorkouts: ', $scope.data);
+          console.log('FeedCtrl getAllWorkouts: ', $scope.data);
         })
         .catch(function(error) {
           console.error(error);
@@ -53,6 +53,7 @@
         .then(function(data){
           //reverse workout data so it's ordered by recency
           $scope.data.workouts = data.reverse();
+          console.log('FeedCtrl getMyWorkouts: ', $scope.data);
         })
         .catch(function(error){
           console.error(error);

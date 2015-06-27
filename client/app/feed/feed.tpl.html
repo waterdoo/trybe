@@ -19,7 +19,7 @@
   <div class="workouts" ng-repeat="workout in data.workouts | filter:search track by $index">
     <div class="workout">
       <!-- Show workout descr -->
-      <div class="user-trybe-post"><span>{{ workout.username }} posted to {{ workout.trybe }}</span></div>
+      <div class="user-trybe-post"><span>{{ workout.username }} posted to {{ workout.trybe }} on {{ workout.date }}</span></div>
       <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
       <div><span class="description">{{ workout.description }}</span></div>
 

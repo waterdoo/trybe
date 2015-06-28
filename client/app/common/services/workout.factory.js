@@ -1,8 +1,8 @@
 /*
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
-* @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-27 21:40:10
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-06-27 18:53:12
 */
 
 'use strict';
@@ -97,7 +97,8 @@
       postWorkout: postWorkout,
       getWorkout: getWorkout,
       selection: workoutSelectionStore,
-      isCreatingWorkout: isCreatingWorkout
+      isCreatingWorkout: isCreatingWorkout,
+      parseWorkouts: parseWorkouts
     };
   };
 

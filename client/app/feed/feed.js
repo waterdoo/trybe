@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-27 14:09:25
+* @Last Modified time: 2015-06-27 18:57:20
 */
 
 'use strict';
@@ -59,6 +59,23 @@
           console.error(error);
         });
     };
+
+    $scope.renderDate = function(workout) {
+      var html = '';
+      var rawDate = workout.date;
+
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+      var day = rawDate.slice(8,10);
+      var monthNum = Number(rawDate.slice(5,7)) - 1;
+      var month = months[monthNum];
+      var year = rawDate.slice(0,4);
+
+      html = month + ' ' + day + ', ' + year;
+
+      return html;
+    },
 
     //Sends workout data from user's selection to workout
     //module so user can log workout

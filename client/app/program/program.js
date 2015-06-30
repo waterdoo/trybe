@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 15:46:11
+* @Last Modified time: 2015-06-30 15:58:45
 */
 
 'use strict';
@@ -69,7 +69,7 @@
 
     //Sends workout data from user's selection to workout
     //module so user can log workout
-    $scope.log = function(index) {
+    $scope.addWorkout = function(index) {
       var isNewWorkout;
       var selection;
 

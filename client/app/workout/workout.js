@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 13:06:03
+* @Last Modified time: 2015-06-30 14:21:18
 */
 
 'use strict';
@@ -60,16 +60,10 @@
       $scope.exerciseCount = 0;
       $scope.temp = {};
       var workout = {
-        'username':null, //handled later
-        // 'trybe':'HR 26/27', //testing diff trybe
-        'trybe':'vtam',
         'type':type,
-        'title':null,
-        'description':null,
         'exercises':[],
         'finalResult':{
-          'type': (type !== 'lift') ? 'time' : null,
-          'value': null
+        'type': (type !== 'lift') ? 'time' : null,
         }
       };
       workout.exercises.push({
@@ -130,6 +124,7 @@
 
       //Update workout's username entry, then post
       $scope.workout.username = AuthFactory.getUsername();
+      $scope.workout.trybe = $scope.workout.username + 'log';
       WorkoutFactory.postWorkout($scope.workout);
       $state.go('feed');
     };

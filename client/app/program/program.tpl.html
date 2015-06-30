@@ -4,12 +4,11 @@
 
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">
-    <button type="button" ng-click="log()" class="btn btn-default create">Create Workout</button>
+    <button type="button" ng-click="log()" class="btn btn-default create">Add Workout</button>
   </div>
 
 
-  <!-- Shows all workouts from filter -->
-  <input class='form-control' type='text' ng-model='search' placeholder='Search Workouts'>
+  <!-- Shows all workouts in program -->
   <div class="workouts" ng-repeat="workout in data.workouts | filter:search track by $index">
     <div class="workout">
       <!-- Show workout descr -->

@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-27 18:53:12
+* @Last Modified time: 2015-06-30 15:43:16
 */
 
 'use strict';
@@ -33,7 +33,7 @@
       });
     };
 
-    var getMyWorkouts = function(username) {
+    var getLogWorkouts = function(username) {
       return $http({
         method: 'GET',
         url: '/api/workouts/individual',
@@ -42,7 +42,16 @@
       .then(function (resp) {
         console.log('getMyWorkout factory resp:', resp);
         parseWorkouts(resp.data);
-        return resp.data; //sends back data to controller
+        var logWorkouts = resp.data.filter(function(element, index, array) {
+          if(element.trybe === username + 'log') {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        //return only workouts from user's log
+        return logWorkouts; //sends back data to controller
       });
     };
 
@@ -92,7 +101,7 @@
 
     return {
       getWorkouts: getWorkouts,
-      getMyWorkouts: getMyWorkouts,
+      getLogWorkouts: getLogWorkouts,
       sendWorkout: sendWorkout,
       postWorkout: postWorkout,
       getWorkout: getWorkout,

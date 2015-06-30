@@ -1,8 +1,8 @@
 /*
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
-* @Last Modified by:   vincetam
-* @Last Modified time: 2015-05-28 09:40:56
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-06-30 13:06:03
 */
 
 'use strict';
@@ -61,7 +61,8 @@
       $scope.temp = {};
       var workout = {
         'username':null, //handled later
-        'trybe':'HR 26/27',
+        // 'trybe':'HR 26/27', //testing diff trybe
+        'trybe':'vtam',
         'type':type,
         'title':null,
         'description':null,

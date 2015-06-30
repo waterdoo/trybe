@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-29 20:23:23
+* @Last Modified time: 2015-06-30 13:08:54
 */
 
 'use strict';
@@ -47,15 +47,15 @@
     var getProgramWorkouts = function(username) {
       return $http({
         method: 'GET',
-        url: '/api/workouts/individual',
+        url: '/api/workouts/all',
         headers: { 'x-access-username': username }
       })
       .then(function (resp) {
-        console.log('getMyWorkout factory resp:', resp);
+        console.log('getProgramWorkouts factory resp:', resp);
         parseWorkouts(resp.data);
-        // return resp.data;
+        return resp.data;
         //temp use dummy data
-        return dummyWorkouts;
+        // return dummyWorkouts;
       });
     };
 

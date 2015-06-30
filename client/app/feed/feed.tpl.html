@@ -19,7 +19,7 @@
   <div class="workouts" ng-repeat="workout in data.workouts | filter:search track by $index">
     <div class="workout">
       <!-- Show workout descr -->
-      <div class="user-trybe-post"><span>{{ workout.username }} posted to {{ workout.trybe }} on {{ renderDate(workout) }}</span></div>
+      <div class="user-trybe-post"><span>{{ renderDate(workout) }}</span></div>
       <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
       <div><span class="description">{{ workout.description }}</span></div>
 
@@ -30,8 +30,8 @@
           <div><span ng-if="workout.type === 'lift'" class="liftResult">Max: {{ exercise.result }} </span></div>
       </div>
 
-      <!-- Shows workout result if a metcon or benchmark workout -->
-      <div><span ng-if="workout.type !== 'lift'"> {{ workout.finalResult.type }}: {{ workout.finalResult.value }} </span></div>
+      <!-- Show result if a metcon or benchmark with result val -->
+      <div><span ng-if="workout.type !== 'lift' && workout.finalResult.value"> {{ workout.finalResult.type }}: {{ workout.finalResult.value }} </span></div>
 
       <div id="type" role="group" aria-label="...">
         <button type="button" ng-click="log($index)" class="btn-block tryButton">try</button>

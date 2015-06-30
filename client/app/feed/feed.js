@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 15:43:07
+* @Last Modified time: 2015-06-30 16:09:02
 */
 
 'use strict';
@@ -82,6 +82,7 @@
     $scope.log = function(index) {
       var isNewWorkout;
       var selection;
+      var isForProgram = false;
 
       //If user selected a pre-existing workout,
       //save workout and send to workout factory
@@ -93,7 +94,7 @@
         isNewWorkout = true;
       }
       console.log('selected workout:', selection);
-      WorkoutFactory.sendWorkout(selection, isNewWorkout);
+      WorkoutFactory.sendWorkout(selection, isNewWorkout, isForProgram);
       $state.go('workout');
     };
 

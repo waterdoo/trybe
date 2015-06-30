@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 15:45:52
+* @Last Modified time: 2015-06-30 16:17:07
 */
 
 'use strict';
@@ -17,6 +17,7 @@
   var WorkoutFactory = function ($http, $location, $window) {
     var workout;
     var isNewWorkout;
+    var isForProgram;
     var workoutSelectionStore = 'com.trybe.selectedWorkout';
     var localStorage = $window.localStorage;
 
@@ -56,14 +57,19 @@
     };
 
     //saves to local storage
-    var sendWorkout = function(selection, isNew) {
+    var sendWorkout = function(selection, isNew, forProgram) {
       workout = selection;
       isNewWorkout = isNew;
+      isForProgram = forProgram;
       localStorage.setItem(this.selection, JSON.stringify(workout));
-      console.log('WorkoutFactory\tsendWorkout: ', workout);
+      console.log('WorkoutFactory sendWorkout: ', workout);
     };
 
     var postWorkout = function(workout) {
+      //If adding workout for program, update workout's trybe obj
+      if(isForProgram) {
+        workout.trybe = workout.username + 'trybe';
+      }
       return $http({
         method: 'POST',
         url: '/api/workouts',

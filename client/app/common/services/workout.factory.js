@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 15:43:16
+* @Last Modified time: 2015-06-30 15:45:52
 */
 
 'use strict';

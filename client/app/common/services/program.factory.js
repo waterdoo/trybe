@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 13:08:54
+* @Last Modified time: 2015-06-30 15:46:00
 */
 
 'use strict';
@@ -44,18 +44,25 @@
       }
     ]
 
-    var getProgramWorkouts = function(username) {
+    var getTrybeWorkouts = function(username) {
       return $http({
         method: 'GET',
-        url: '/api/workouts/all',
+        url: '/api/workouts/individual',
         headers: { 'x-access-username': username }
       })
       .then(function (resp) {
-        console.log('getProgramWorkouts factory resp:', resp);
+        console.log('getMyWorkout factory resp:', resp);
         parseWorkouts(resp.data);
-        return resp.data;
-        //temp use dummy data
-        // return dummyWorkouts;
+        var trybeWorkouts = resp.data.filter(function(element, index, array) {
+          if(element.trybe === username + 'trybe') {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        //return only workouts from user's log
+        return trybeWorkouts; //sends back data to controller
       });
     };
 
@@ -104,7 +111,7 @@
     };
 
     return {
-      getProgramWorkouts: getProgramWorkouts,
+      getTrybeWorkouts: getTrybeWorkouts,
       sendWorkout: sendWorkout,
       postWorkout: postWorkout,
       getWorkout: getWorkout,

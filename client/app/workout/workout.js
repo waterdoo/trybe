@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 14:21:18
+* @Last Modified time: 2015-06-30 16:37:44
 */
 
 'use strict';
@@ -53,6 +53,7 @@
       $state.go('login');
     } else {
       $scope.isCreatingWorkout = WorkoutFactory.isCreatingWorkout() !== false;
+      $scope.isForProgram = WorkoutFactory.isCreatingForProgram() !== false;
     }
 
     $scope.createWorkout = function(type) {
@@ -124,12 +125,25 @@
 
       //Update workout's username entry, then post
       $scope.workout.username = AuthFactory.getUsername();
-      $scope.workout.trybe = $scope.workout.username + 'log';
+
+      //If workout is for user's workout program, update trybe prop
+      if($scope.isForProgram) {
+        $scope.workout.trybe = $scope.workout.username + 'trybe';
+      } else {
+        $scope.workout.trybe = $scope.workout.username + 'log';
+      }
+
       WorkoutFactory.postWorkout($scope.workout);
-      $state.go('feed');
+
+      //Send user back to either program or log
+      if($scope.isForProgram) {
+        $state.go('program')
+      } else {
+        $state.go('feed');
+      }
     };
 
-    //Initialize workout for log
+    //Initialize workout for log or program
     if($scope.isCreatingWorkout) {
       $scope.createWorkout();
     } else {

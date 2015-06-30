@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 16:17:07
+* @Last Modified time: 2015-06-30 16:36:19
 */
 
 'use strict';
@@ -66,10 +66,6 @@
     };
 
     var postWorkout = function(workout) {
-      //If adding workout for program, update workout's trybe obj
-      if(isForProgram) {
-        workout.trybe = workout.username + 'trybe';
-      }
       return $http({
         method: 'POST',
         url: '/api/workouts',
@@ -93,6 +89,10 @@
       return isNewWorkout;
     };
 
+    var isCreatingForProgram = function() {
+      return isForProgram;
+    }
+
     var parseWorkouts = function(resp) {
       resp.forEach(function(workout){
         if(workout.type === 'lift') {
@@ -113,6 +113,7 @@
       getWorkout: getWorkout,
       selection: workoutSelectionStore,
       isCreatingWorkout: isCreatingWorkout,
+      isCreatingWorkout, isCreatingForProgram,
       parseWorkouts: parseWorkouts
     };
   };

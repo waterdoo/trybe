@@ -27,7 +27,7 @@
           <!-- If workout isn't a lift, show final result -->
           <div ng-if="workout.type !== 'lift'">
             <label for="description">Instructions</label>
-            <textarea id="description" class="form-control" placeholder="Instructions: ">{{workout.description}}</textarea>
+            <textarea id="description" class="form-control instructions" placeholder="Instructions: ">{{workout.description}}</textarea>
             <label for="result">{{workout.finalResult.type}}</label>
             <input ng-model="workout.finalResult.value"></input>
           </div>

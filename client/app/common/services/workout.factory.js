@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 16:36:19
+* @Last Modified time: 2015-06-30 18:15:39
 */
 
 'use strict';
@@ -75,7 +75,7 @@
           console.log('Workout added', response);
           return response.data;
         });
-      };
+    };
 
     var getWorkout = function() {
       if (workout === undefined) {

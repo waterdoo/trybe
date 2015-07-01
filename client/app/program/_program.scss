@@ -1,0 +1,84 @@
+// With regard to Bootstrap, app modules are positioned as
+// rows with nested spans, which divide rows horizontally.
+.program {
+  @include make-xs-column(12);
+  // @include make-xs-column-offset(0);
+  @include make-md-column(4);
+  @include make-md-column-offset(4);
+  @include make-lg-column(4);
+  @include make-lg-column-offset(4);
+
+  .nextUp {
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 16px;
+  }
+
+  background-color: $brand-background;
+
+  .brand {
+    font-size: 22px;
+    font-family: 'ubuntu';
+    color: $brand-background;
+    text-align: center;
+    background-color: $brand-primary;
+  }
+
+  .create {
+    // position: fixed;
+    // bottom: 0px;
+    text-align: center;
+    font-size: 14px;
+    margin: 20px 0 20px 0;
+    z-index: 10;
+  }
+
+  .view {
+    text-align: center;
+    margin: 20px 0 20px 0;
+  }
+
+  .workout {
+    margin: 10px 0 10px 0;
+    padding: 10px 5px 10px 5px;
+    width: 100%;
+    background-color: $brand-workout;
+
+    .user-trybe-post {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .exercises {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .description {
+      white-space: pre-wrap;
+    }
+
+    .liftResult {
+      margin-left: 20px;
+    }
+
+    .tryButton {
+      text-align: center;
+      border:1px solid gray;
+      background-color: $brand-primary;
+      margin: 20px 0 0 0;
+      font-family: 'ubuntu';
+      font-size: 16px;
+    }
+  }
+}
+
+.navBar {
+  position: fixed;
+  bottom: 0px;
+
+  .navButton {
+    width: 30vw;
+  }
+}

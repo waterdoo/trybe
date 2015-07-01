@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 14:07:28
+* @Last Modified time: 2015-06-30 18:59:49
 */
 'use strict';
 
@@ -117,11 +117,25 @@ module.exports = {
     });
   },
 
+  removeWorkout: function(req, res, next){
+    //delete workouts where id = req.body.id
+    Workout.find({where: {id: req.body.id}})
+    .then(function(workout){
+      Exercise.findAll({where: {WorkoutId: workout.id}})
+      .then(function(exercises){
+        exercises.forEach(function(exercise){
+          exercise.destroy();
+        })
+      })
+      workout.destroy();
+    })
+  },
+
 // This function will go into the database and find all workouts from all of the trybes that the user is a part of and return that
 // as an object following the format stated in dataObjects.js
   getAllWorkouts: function(req, res, next){
     var workoutsArray = [];
-    var user= req.headers['x-access-username'];
+    var user = req.headers['x-access-username'];
     console.log(user);
     User.find ({where: {username: user}}).then(function(user){ // find the user
       user.getTrybes().then(function(trybes){ //will return an array of trybe objects
@@ -174,6 +188,7 @@ module.exports = {
           Exercise.findAll({where: {workoutID: workout.get('id')}}).then(function(exercises){ // finds all exercises for each workout
             Trybe.find({where: {id: workout.TrybeId}}).done(function(trybe){ // used to get trybe name
               var workoutObj = { // create the workout object in the proper format
+                id: workout.get('id'),
                 username: user.get('username'),
                 trybe: trybe.get('name'),
                 type: workout.get('type'),

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 16:09:10
+* @Last Modified time: 2015-06-30 19:11:18
 */
 
 'use strict';
@@ -26,7 +26,7 @@
    * controls feed state from client side
    * @param {angular} $scope
    */
-  var ProgramCtrl = function ($scope, $location, $state, $window, ProgramFactory, WorkoutFactory, AuthFactory) {
+  var ProgramCtrl = function ($scope, $location, $state, $window, ProgramFactory, WorkoutFactory, AuthFactory, NavFactory) {
 
     $scope.init = function() {
       if(!AuthFactory.isAuth()) {
@@ -42,7 +42,7 @@
       ProgramFactory.getTrybeWorkouts($scope.username)
         .then(function(data){
           //reverse workout data so it's ordered by recency
-          $scope.data.workouts = data.reverse();
+          $scope.data.workouts = data;
           console.log('FeedCtrl getTrybeWorkouts: ', $scope.data);
         })
         .catch(function(error){
@@ -72,21 +72,27 @@
     $scope.addWorkout = function(index) {
       var isNewWorkout;
       var selection;
-      var isForProgram = true;
+      var isForProgram;
 
       //If user selected a pre-existing workout,
       //save workout and send to workout factory
       if(index !== undefined) {
         selection = $scope.data.workouts[index];
         isNewWorkout = false;
+        isForProgram = false;
       } else {
         selection = null;
         isNewWorkout = true;
+        isForProgram = true;
       }
       console.log('selected workout:', selection);
       WorkoutFactory.sendWorkout(selection, isNewWorkout, isForProgram);
       $state.go('workout');
     };
+
+    $scope.go = function(destination) {
+      NavFactory.navigateTo(destination);
+    }
 
     $scope.init();
   };

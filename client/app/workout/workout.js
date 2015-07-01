@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 16:37:44
+* @Last Modified time: 2015-06-30 19:03:38
 */
 
 'use strict';
@@ -47,17 +47,31 @@
    * record workout results.
    * @param {angular} $scope
    */
-  var WorkoutCtrl = function ($scope, $state, AuthFactory, WorkoutFactory) {
+  var WorkoutCtrl = function ($scope, $state, AuthFactory, WorkoutFactory, ProgramFactory, NavFactory) {
 
     if (!AuthFactory.isAuth()) {
       $state.go('login');
     } else {
+      $scope.username = AuthFactory.getUsername();
       $scope.isCreatingWorkout = WorkoutFactory.isCreatingWorkout() !== false;
-      $scope.isForProgram = WorkoutFactory.isCreatingForProgram() !== false;
+      $scope.isForProgram = WorkoutFactory.isCreatingForProgram() === true;
+      console.log('workout controller - isForProgram:', $scope.isForProgram);
     }
 
+    $scope.loadNextWorkout = function() {
+      //Load next workout from user's workout program
+      ProgramFactory.getTrybeWorkouts($scope.username)
+        .then(function(workouts) {
+          $scope.workout = workouts[0];
+          //if no workouts in program, default to blank workout
+          if($scope.workout === undefined) {
+            $scope.createWorkout();
+          }
+        })
+    };
+
     $scope.createWorkout = function(type) {
-      type = type || 'lift';
+      type = type || 'metcon';
       $scope.exerciseCount = 0;
       $scope.temp = {};
       var workout = {
@@ -112,6 +126,10 @@
       $scope.workout.finalResult.type = type;
     };
 
+    $scope.go = function(destination) {
+      NavFactory.navigateTo(destination);
+    }
+
     $scope.log = function() {
       //If user inputs a new exercise, add for them
       if($scope.temp && $scope.temp.exName) {
@@ -126,11 +144,16 @@
       //Update workout's username entry, then post
       $scope.workout.username = AuthFactory.getUsername();
 
-      //If workout is for user's workout program, update trybe prop
+      //If workout is for posting to user's program, update trybe prop
       if($scope.isForProgram) {
         $scope.workout.trybe = $scope.workout.username + 'trybe';
       } else {
         $scope.workout.trybe = $scope.workout.username + 'log';
+      }
+
+      //If workout was accepted from program, delete from program
+      if(!$scope.isForProgram) {
+        ProgramFactory.removeAcceptedWorkout($scope.workout);
       }
 
       WorkoutFactory.postWorkout($scope.workout);
@@ -145,7 +168,7 @@
 
     //Initialize workout for log or program
     if($scope.isCreatingWorkout) {
-      $scope.createWorkout();
+      $scope.loadNextWorkout();
     } else {
       $scope.workout = WorkoutFactory.getWorkout();
     }

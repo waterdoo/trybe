@@ -1,4 +1,4 @@
-<div class="feed">
+<div class="program">
 
   <div class="brand">Program</div>
 
@@ -9,9 +9,12 @@
 
 
   <!-- Shows all workouts in program -->
-  <div class="workouts" ng-repeat="workout in data.workouts | filter:search track by $index">
+  <div class="nextUp">Next Up</div>
+  <div class="workouts" ng-repeat="workout in data.workouts track by $index">
     <div class="workout">
       <!-- Show workout descr -->
+
+
       <div class="user-trybe-post"><span>{{ workout.title }}</span></div>
       <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
       <div><span class="description">{{ workout.description }}</span></div>
@@ -30,7 +33,13 @@
         <button type="button" ng-click="addWorkout($index)" class="btn-block tryButton">try</button>
       </div>
 
+
     </div>
   </div>
 
+  <div class="navBar" role="group" aria-label="...">
+    <button type="button" class="navButton" ng-click="go('feed')">Log</button>
+    <button type="button" class="navButton" ng-click="go('workout')">WOD</button>
+    <button type="button" class="navButton" ng-click="go('program')">Program</button>
+  </div>
 </div>

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 15:46:00
+* @Last Modified time: 2015-06-30 18:17:54
 */
 
 'use strict';
@@ -19,30 +19,6 @@
     var isNewWorkout;
     var workoutSelectionStore = 'com.trybe.selectedWorkout';
     var localStorage = $window.localStorage;
-
-    var dummyWorkouts = [
-      {
-        date: '2015-06-30T02:18:02.000Z',
-        description: 'Skills: Back lever practice with knees tucked in, and german hangs. Handstand practice. WOD: 10! HSPUs, German Hangs/Back Lever practice for ~5 seconds',
-        exercises: [
-          {
-            WorkoutId: 24,
-            createdAt: '2015-06-30T02:18:02.000Z',
-            exerciseName: null,
-            id: 25,
-            quantity: '[]',
-            result: null
-          }
-        ],
-        finalResult: {
-          type: 'time',
-          value: null
-        },
-        title: 'Workout 1',
-        type: 'metcon',
-        completed: false
-      }
-    ]
 
     var getTrybeWorkouts = function(username) {
       return $http({
@@ -64,6 +40,18 @@
         //return only workouts from user's log
         return trybeWorkouts; //sends back data to controller
       });
+    };
+
+    var removeAcceptedWorkout = function(workout) {
+      return $http({
+        method: 'POST',
+        url: '/api/workouts/remove',
+        data: workout
+      })
+        .then(function(response){
+          console.log('Workout added', response);
+          return response.data;
+        });
     };
 
     //saves to local storage
@@ -112,6 +100,7 @@
 
     return {
       getTrybeWorkouts: getTrybeWorkouts,
+      removeAcceptedWorkout: removeAcceptedWorkout,
       sendWorkout: sendWorkout,
       postWorkout: postWorkout,
       getWorkout: getWorkout,

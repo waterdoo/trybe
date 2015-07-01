@@ -20,3 +20,31 @@
 @import "skins/manifest.gen";
 
 // Sections code includes page-specific and layout-related styles
+.header {
+  font-size: 22px;
+  font-family: 'Roboto';
+  color: $brand-background;
+  text-align: center;
+  background-color: $brand-primary;
+
+  //Testing setting as fixed top
+  position: fixed;
+  width: 100%;
+  height: 30px;
+  z-index: 5;
+}
+
+.push {
+  margin-top: 30px;
+}
+
+.navBar {
+  // @include make-xs-column(12);
+  // @include make-xs-column-offset(0);
+  // @include make-md-column(4);
+  // @include make-md-column-offset(2);
+  // @include make-lg-column(4);
+  // @include make-lg-column-offset(4);
+  position: fixed;
+}
+

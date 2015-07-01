@@ -1,6 +1,6 @@
 <div class="feed">
 
-  <div class="brand">trybe</div>
+  <!-- <div class="brand">trybe</div> -->
 
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">
@@ -33,17 +33,14 @@
       <!-- Show result if a metcon or benchmark with result val -->
       <div><span ng-if="workout.type !== 'lift' && workout.finalResult.value"> {{ workout.finalResult.type }}: {{ workout.finalResult.value }} </span></div>
 
-      <div id="type" role="group" aria-label="...">
-        <button type="button" ng-click="log($index)" class="btn-block tryButton">try</button>
+      <div id="type" role="group" aria-label="..." class="tryButtonContainer">
+        <button type="button" ng-click="log($index)" class="tryButton">try</button>
       </div>
 
     </div>
   </div>
 
-  <div class="navBar" role="group" aria-label="...">
-    <button type="button" class="navButton" ng-click="go('feed')">Log</button>
-    <button type="button" class="navButton" ng-click="go('workout')">WOD</button>
-    <button type="button" class="navButton" ng-click="go('program')">Program</button>
-  </div>
-
 </div>
+
+
+

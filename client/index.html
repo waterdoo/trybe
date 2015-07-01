@@ -21,11 +21,18 @@
     </script>
     <![endif]-->
     <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+    <div class="header brand">trybe</div>
     <main class="container">
         <div class="row">
-            <div ui-view></div>
+            <div class="push" ui-view></div>
         </div>
     </main>
+
+    <div class="footer navBar" role="group" aria-label="...">
+      <button type="button" class="navButton" ng-click="go('feed')">Log</button>
+      <button type="button" class="navButton" ng-click="go('workout')">WOD</button>
+      <button type="button" class="navButton" ng-click="go('program')">Program</button>
+    </div>
 
 <% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script>

@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 18:15:39
+* @Last Modified time: 2015-07-01 13:25:50
 */
 
 'use strict';
@@ -113,7 +113,7 @@
       getWorkout: getWorkout,
       selection: workoutSelectionStore,
       isCreatingWorkout: isCreatingWorkout,
-      isCreatingWorkout, isCreatingForProgram,
+      isCreatingForProgram: isCreatingForProgram,
       parseWorkouts: parseWorkouts
     };
   };

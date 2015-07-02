@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 19:11:18
+* @Last Modified time: 2015-07-02 12:57:34
 */
 
 'use strict';
@@ -50,19 +50,15 @@
         });
     };
 
-    $scope.renderDate = function(workout) {
+    $scope.renderWeekAndDay = function(workoutNum) {
       var html = '';
-      var rawDate = workout.date;
+      var weeks = $scope.data.weeks || 12;
+      var days = $scope.data.days || 4;
 
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      var weekNum = Math.floor(workoutNum/days);
+      var dayNum = workoutNum % days;
 
-      var day = rawDate.slice(8,10);
-      var monthNum = Number(rawDate.slice(5,7)) - 1;
-      var month = months[monthNum];
-      var year = rawDate.slice(0,4);
-
-      html = month + ' ' + day + ', ' + year;
+      html = 'Week ' + weekNum + ', Day ' + dayNum;
 
       return html;
     },
@@ -89,10 +85,6 @@
       WorkoutFactory.sendWorkout(selection, isNewWorkout, isForProgram);
       $state.go('workout');
     };
-
-    $scope.go = function(destination) {
-      NavFactory.navigateTo(destination);
-    }
 
     $scope.init();
   };

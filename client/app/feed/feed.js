@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 17:43:16
+* @Last Modified time: 2015-07-02 12:57:47
 */
 
 'use strict';
@@ -76,10 +76,6 @@
 
       return html;
     },
-
-    $scope.go = function(destination) {
-      NavFactory.navigateTo(destination);
-    }
 
     //Sends workout data from user's selection to workout
     //module so user can log workout

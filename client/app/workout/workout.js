@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 19:03:38
+* @Last Modified time: 2015-07-02 12:57:58
 */
 
 'use strict';
@@ -125,10 +125,6 @@
     $scope.setResultType = function(type) {
       $scope.workout.finalResult.type = type;
     };
-
-    $scope.go = function(destination) {
-      NavFactory.navigateTo(destination);
-    }
 
     $scope.log = function() {
       //If user inputs a new exercise, add for them

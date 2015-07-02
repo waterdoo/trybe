@@ -1,19 +1,21 @@
 <div class="program">
 
+  <!-- Input for Workouts/week and Length of Program -->
+  <div>Program Length, In Weeks<input ng-model="data.weeks" type="text"></input></div>
+  <div>Workouts Per Week<input ng-model="data.days" type="text"></input></div>
+
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">
     <button type="button" ng-click="addWorkout()" class="btn btn-default create">Add Workout</button>
   </div>
 
+  <div class="nextUp">Next Up</div>
 
   <!-- Shows all workouts in program -->
-  <div class="nextUp">Next Up</div>
   <div class="workouts" ng-repeat="workout in data.workouts track by $index">
     <div class="workout">
       <!-- Show workout descr -->
-
-
-      <div class="user-trybe-post"><span>{{ workout.title }}</span></div>
+      <div class="user-trybe-post"><span>{{ renderWeekAndDay(5) }}</span></div>
       <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
       <div><span class="description">{{ workout.description }}</span></div>
 

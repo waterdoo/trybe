@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-05 10:16:27
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-29 20:00:43
+* @Last Modified time: 2015-07-01 17:31:15
 */
 
 'use strict';
@@ -28,15 +28,12 @@
    * Entry point for application. Loads all client-side dependencies
    * @param {angular} $scope
    */
-  var AppCtrl = function($scope, $state) {
+  var AppCtrl = function($scope, $state, NavFactory) {
 
-    // Add state to rootScope for use inside view templates
-    // $rootScope.state = $state;
+    $scope.go = function(destination) {
+      NavFactory.navigateTo(destination);
+    }
 
-    // $rootScope.isAuthed = false;
-    // $rootScope.$on('$routeChangeError', function (event, current, previous, rejection) {
-    //   console.log('routeChangeError: ', event);
-    // });
   };
 
   //Entry point for for module
@@ -53,7 +50,8 @@
       'trybe-app.feed',
       'trybe-app.program',
       'trybe-app.login',
-      'trybe-app.profile'
+      'trybe-app.profile',
+      'trybe-app.common'
     ])
 
     .config(AppStateConfig)

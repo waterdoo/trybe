@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-02 14:50:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:19:01
+* @Last Modified time: 2015-07-02 15:25:09
 */
 
 'use strict';
@@ -22,5 +22,20 @@ module.exports = {
       schedule.days = trybe.get('days');
       res.send(schedule);
     })
+  }
+
+  setSchedule: function(req, res, next) {
+    var username = req.headers['x-access-username'];
+    var userTrybe = username + 'trybe';
+    var schedule = {};
+
+    Trybe.find({where: {name: userTrybe}})
+    .then(function(trybe){
+      trybe.updateAttributes({
+        weeks: req.body.weeks,
+        days: req.body.days
+      })
+    })
+    .then(function() {});
   }
 };

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:10:21
+* @Last Modified time: 2015-07-02 15:57:25
 */
 
 'use strict';
@@ -42,8 +42,8 @@
     $scope.getSchedule = function() {
       ProgramFactory.getTrybeSchedule($scope.username)
         .then(function(schedule){
-          $scope.data.days = schedule.days;
-          $scope.data.weeks = schedule.weeks;
+          $scope.data.days = schedule.days || 5;
+          $scope.data.weeks = schedule.weeks || 12;
           console.log('in program module, schedule retrieved:', schedule);
         })
         .catch(function(error){
@@ -54,7 +54,16 @@
     $scope.getTrybeWorkouts = function() {
       ProgramFactory.getTrybeWorkouts($scope.username)
         .then(function(data){
-          //reverse workout data so it's ordered by recency
+          //sort workouts by order
+          data.sort(function(a,b){
+            if(a.order > b.order) {
+              return 1;
+            }
+            if(a.order < b.order) {
+              return -1;
+            }
+            return 0;
+          });
           $scope.data.workouts = data;
           console.log('program module getTrybeWorkouts: ', $scope.data);
         })
@@ -65,11 +74,18 @@
 
     $scope.renderWeekAndDay = function(workoutNum) {
       var html = '';
-      var weeks = $scope.data.weeks || 12;
-      var days = $scope.data.days || 4;
+      var weeks = $scope.data.weeks;
+      var days = $scope.data.days;
 
-      var weekNum = Math.floor(workoutNum/days);
+
+      var weekNum = Math.floor(workoutNum/days) + 1;
       var dayNum = workoutNum % days;
+
+      //Account for last day of week
+      if(workoutNum%days === 0) {
+        dayNum = days;
+        weekNum = weekNum - 1;
+      }
 
       html = 'Week ' + weekNum + ', Day ' + dayNum;
 

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:12:12
+* @Last Modified time: 2015-07-02 15:26:14
 */
 
 'use strict';
@@ -21,7 +21,6 @@
     var localStorage = $window.localStorage;
 
     var getTrybeSchedule = function(username) {
-      console.log('in getTrybeSchedule');
       return $http({
         method: 'GET',
         url: '/api/trybes/schedule',

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:24:54
+* @Last Modified time: 2015-07-02 15:12:12
 */
 
 'use strict';
@@ -20,6 +20,19 @@
     var workoutSelectionStore = 'com.trybe.selectedWorkout';
     var localStorage = $window.localStorage;
 
+    var getTrybeSchedule = function(username) {
+      console.log('in getTrybeSchedule');
+      return $http({
+        method: 'GET',
+        url: '/api/trybes/schedule',
+        headers: { 'x-access-username': username }
+      })
+      .then(function(resp) {
+        console.log('in getTrybeSchedule, resp:', resp);
+        return resp.data;
+      });
+    };
+
     var getTrybeWorkouts = function(username) {
       return $http({
         method: 'GET',
@@ -30,7 +43,8 @@
         console.log('in program factory, getTrybeWorkouts:', resp);
         parseWorkouts(resp.data);
         var trybeWorkouts = resp.data.filter(function(element, index, array) {
-          if(element.trybe === username + 'trybe') {
+          //Only show uncompleted workouts from user's trybe
+          if(element.trybe === username + 'trybe' && element.completed !== true) {
             return true;
           } else {
             return false;
@@ -99,6 +113,7 @@
     };
 
     return {
+      getTrybeSchedule: getTrybeSchedule,
       getTrybeWorkouts: getTrybeWorkouts,
       completeWorkout: completeWorkout,
       sendWorkout: sendWorkout,

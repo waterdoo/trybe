@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:11:28
+* @Last Modified time: 2015-07-02 15:10:21
 */
 
 'use strict';
@@ -34,8 +34,21 @@
       } else {
         $scope.data = {};
         $scope.username = AuthFactory.getUsername();
+        $scope.getSchedule();
         $scope.getTrybeWorkouts();
       }
+    };
+
+    $scope.getSchedule = function() {
+      ProgramFactory.getTrybeSchedule($scope.username)
+        .then(function(schedule){
+          $scope.data.days = schedule.days;
+          $scope.data.weeks = schedule.weeks;
+          console.log('in program module, schedule retrieved:', schedule);
+        })
+        .catch(function(error){
+          console.error(error);
+        });
     };
 
     $scope.getTrybeWorkouts = function() {

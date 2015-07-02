@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 18:17:54
+* @Last Modified time: 2015-07-02 14:11:12
 */
 
 'use strict';
@@ -27,7 +27,7 @@
         headers: { 'x-access-username': username }
       })
       .then(function (resp) {
-        console.log('getMyWorkout factory resp:', resp);
+        console.log('in program factory, getTrybeWorkouts:', resp);
         parseWorkouts(resp.data);
         var trybeWorkouts = resp.data.filter(function(element, index, array) {
           if(element.trybe === username + 'trybe') {

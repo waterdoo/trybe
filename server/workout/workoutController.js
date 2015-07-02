@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-06-30 18:59:49
+* @Last Modified time: 2015-07-02 14:15:02
 */
 'use strict';
 
@@ -189,6 +189,7 @@ module.exports = {
             Trybe.find({where: {id: workout.TrybeId}}).done(function(trybe){ // used to get trybe name
               var workoutObj = { // create the workout object in the proper format
                 id: workout.get('id'),
+                order: workout.get('order'),
                 username: user.get('username'),
                 trybe: trybe.get('name'),
                 type: workout.get('type'),
@@ -196,7 +197,8 @@ module.exports = {
                 date: workout.get('createdAt'),
                 description: workout.get('description'),
                 exercises: exercises,
-                finalResult: workout.get('finalResult')
+                finalResult: workout.get('finalResult'),
+                completed: workout.get('completed')
               };
               workoutsArray.push(workoutObj);
               innerNext();// this callback lets the async each know to move on to the next value

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 12:57:34
+* @Last Modified time: 2015-07-02 14:11:28
 */
 
 'use strict';
@@ -43,7 +43,7 @@
         .then(function(data){
           //reverse workout data so it's ordered by recency
           $scope.data.workouts = data;
-          console.log('FeedCtrl getTrybeWorkouts: ', $scope.data);
+          console.log('program module getTrybeWorkouts: ', $scope.data);
         })
         .catch(function(error){
           console.error(error);

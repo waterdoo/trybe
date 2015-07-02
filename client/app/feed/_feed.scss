@@ -8,13 +8,14 @@
 .feed {
   @include make-xs-column(12);
   @include make-xs-column-offset(0);
-  @include make-md-column(6);
-  @include make-md-column-offset(3);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+  @include make-md-column(4);
+  @include make-md-column-offset(4);
   @include make-lg-column(4);
   @include make-lg-column-offset(4);
 
   background-color: $brand-background;
-
 
   .create {
     font-size: 14px;

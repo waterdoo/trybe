@@ -1,7 +1,5 @@
 <div class="program">
 
-  <div class="brand">Program</div>
-
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">
     <button type="button" ng-click="addWorkout()" class="btn btn-default create">Add Workout</button>
@@ -29,7 +27,7 @@
       <!-- Show result if a metcon or benchmark with result val -->
       <div><span ng-if="workout.type !== 'lift' && workout.finalResult.value"> {{ workout.finalResult.type }}: {{ workout.finalResult.value }} </span></div>
 
-      <div id="type" role="group" aria-label="...">
+      <div id="type" role="group" aria-label="..." class="tryButtonContainer">
         <button type="button" ng-click="addWorkout($index)" class="btn-block tryButton">try</button>
       </div>
 

@@ -21,6 +21,15 @@
 
 // Sections code includes page-specific and layout-related styles
 .header {
+  @include make-xs-column(12);
+  @include make-xs-column-offset(0);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+  @include make-md-column(4);
+  @include make-md-column-offset(4);
+  @include make-lg-column(4);
+  @include make-lg-column-offset(4);
+
   font-size: 22px;
   font-family: 'Roboto';
   color: $brand-background;
@@ -37,6 +46,15 @@
 }
 
 .footer {
+  @include make-xs-column(12);
+  @include make-xs-column-offset(0);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+  @include make-md-column(4);
+  @include make-md-column-offset(4);
+  @include make-lg-column(4);
+  @include make-lg-column-offset(4);
+
   font-size: 14px;
   font-family: 'Roboto';
   color: #fff;

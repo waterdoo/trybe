@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:11:12
+* @Last Modified time: 2015-07-02 14:24:54
 */
 
 'use strict';
@@ -42,10 +42,10 @@
       });
     };
 
-    var removeAcceptedWorkout = function(workout) {
+    var completeWorkout = function(workout) {
       return $http({
         method: 'POST',
-        url: '/api/workouts/remove',
+        url: '/api/workouts/complete',
         data: workout
       })
         .then(function(response){
@@ -100,7 +100,7 @@
 
     return {
       getTrybeWorkouts: getTrybeWorkouts,
-      removeAcceptedWorkout: removeAcceptedWorkout,
+      completeWorkout: completeWorkout,
       sendWorkout: sendWorkout,
       postWorkout: postWorkout,
       getWorkout: getWorkout,

@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:15:02
+* @Last Modified time: 2015-07-02 14:29:02
 */
 'use strict';
 
@@ -117,18 +117,17 @@ module.exports = {
     });
   },
 
-  removeWorkout: function(req, res, next){
+  completeWorkout: function(req, res, next){
     //delete workouts where id = req.body.id
     Workout.find({where: {id: req.body.id}})
     .then(function(workout){
-      Exercise.findAll({where: {WorkoutId: workout.id}})
-      .then(function(exercises){
-        exercises.forEach(function(exercise){
-          exercise.destroy();
-        })
+      workout.updateAttributes({
+        completed: true
       })
-      workout.destroy();
-    })
+    }).then(function() {});
+
+    // .then(function(workout){
+    //   workout.destroy();
   },
 
 // This function will go into the database and find all workouts from all of the trybes that the user is a part of and return that

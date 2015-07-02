@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 12:57:58
+* @Last Modified time: 2015-07-02 14:26:25
 */
 
 'use strict';
@@ -147,9 +147,10 @@
         $scope.workout.trybe = $scope.workout.username + 'log';
       }
 
-      //If workout was accepted from program, delete from program
+      //If workout was accepted from program, mark completed so
+      //workout is hidden from program
       if(!$scope.isForProgram) {
-        ProgramFactory.removeAcceptedWorkout($scope.workout);
+        ProgramFactory.completeWorkout($scope.workout);
       }
 
       WorkoutFactory.postWorkout($scope.workout);

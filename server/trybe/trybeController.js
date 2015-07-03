@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-02 14:50:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:25:09
+* @Last Modified time: 2015-07-02 23:58:06
 */
 
 'use strict';
@@ -22,7 +22,7 @@ module.exports = {
       schedule.days = trybe.get('days');
       res.send(schedule);
     })
-  }
+  },
 
   setSchedule: function(req, res, next) {
     var username = req.headers['x-access-username'];

@@ -1,0 +1,106 @@
+<div class="workout">
+
+  <form ng-model="workout">
+
+    <!-- Copy workout state -->
+    <fieldset ui-view='log' ng-if='!isCreatingWorkout'>
+      <legend>WOD</legend>
+        <div class="form-group">
+          <label for="type">Type: {{workout.type}}</label>
+        </div>
+
+        <!-- Display workout instructions -->
+        <div class="form-group">
+
+          <!-- If workout is lift, show exercise list -->
+          <ul ng-if="workout.type === 'lift'" class="exercise-list">
+            <label for="exercises">Exercises</label>
+            <li ng-repeat="ex in workout.exercises track by $index">
+              <div>{{ex.exerciseName}}</div>
+              <!--if workout is lift, show quantity & results-->
+              <div class="workout-quantity">{{printWorkoutQuantity(ex)}}
+                <div>Max Weight: <input ng-model="workout.exercises[$index].result" type="text" value="{{ex.result}}"></input></div>
+              </div>
+            </li>
+          </ul>
+
+          <!-- If workout isn't a lift -->
+          <div ng-if="workout.type !== 'lift'">
+            <label for="description">Instructions</label>
+            <textarea id="description" class="form-control instructions" placeholder="Instructions: ">{{workout.description}}</textarea>
+            <label for="result">{{workout.finalResult.type}}</label>
+            <input ng-model="workout.finalResult.value"></input>
+          </div>
+
+          <!-- Log button posts workout data to server -->
+          <button class="btn-block" type="button" ng-click="log()" class="btn btn-default">Log</button>
+        </div>
+    </fieldset>
+
+    <!-- Create state -->
+    <fieldset ng-if='isCreatingWorkout' ui-view='create'>
+      <legend>WOD</legend>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <div id="type" class="btn-group" role="group" aria-label="...">
+            <button type="button" ng-click="createWorkout('lift')" class="btn btn-default">Lift</button>
+            <button type="button" ng-click="createWorkout('metcon')" class="btn btn-default">Metcon</button>
+            <button type="button" ng-click="createWorkout('benchmark')" class="btn btn-default">Benchmark</button>
+          </div>
+        </div>
+
+      <!-- Type: Lift -->
+      <div ng-if="workout.type === 'lift'">
+        <legend></legend>
+        <div class="ctrls-by-type">
+
+          <div class="ctrl-group" ng-repeat="ex in workout.exercises track by $index">
+            <input ng-model="ex.exerciseName" placeholder="Exercise"></input>
+            <div class="ctrl-group exercise">
+              <!-- <numstepper ng-model="ex.quantity[0]" id="sets"></numstepper> -->
+              <input type="number" class="ctrl-group" ng-model="ex.quantity[0]" placeholder="Sets"></input>
+              <input type="number" class="ctrl-group" ng-model="ex.quantity[1]" placeholder="Reps"></input>
+              <input type="number" class="ctrl-group" ng-model="ex.result" placeholder="Max Weight"></input>
+            </div>
+          </div>
+
+        </div>
+        <button type="button" ng-click="addExercise()" class="btn btn-default">Add Lift</button>
+      </div>
+
+
+      <!-- Type: Metcon or Benchmark -->
+      <div ng-if="workout.type !== 'lift'">
+        <div class="ctrl-group">
+        <label for="description">Instructions</label>
+
+        <textarea id="description" class="form-control instructions" placeholder="{{placeholders.instructions}}" ng-model="workout.description">
+        </textarea>
+
+          <label class="label" for="type">Track By</label>
+          <div id="type" class="btn-group results" role="group" aria-label="...">
+            <button type="button" ng-click="setResultType('time')" class="btn btn-default">Time</button>
+            <button type="button" ng-click="setResultType('reps')" class="btn btn-default">Reps</button>
+          </div>
+        </div>
+
+        <div class="ctrl-group">
+        </div>
+
+        <div class="ctrl-group">
+          <label class="label" for="type" ng-if="workout.finalResult.type === 'time'">Time</label>
+          <input class="ctrl-group" ng-if="workout.finalResult.type === 'time'" ng-model="temp.finalResult"></input>
+
+          <label class="label" for="type" ng-if="workout.finalResult.type === 'reps'">Reps</label>
+          <input type="number" class="ctrl-group" ng-if="workout.finalResult.type === 'reps'" ng-model="temp.finalResult"></input>
+        </div>
+      </div>
+
+      <!-- Posts workout data to server and sends user to feed -->
+      <button class="btn-block" type="button" ng-click="log()" class="btn btn-default">Complete</button>
+
+    </fieldset>
+
+  </form>
+
+</div>

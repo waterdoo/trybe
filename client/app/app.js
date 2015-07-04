@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-05 10:16:27
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-01 17:31:15
+* @Last Modified time: 2015-07-03 17:19:09
 */
 
 'use strict';
@@ -48,6 +48,7 @@
       'templates-app',
       'trybe-app.workout',
       'trybe-app.feed',
+      'trybe-app.createProgram',
       'trybe-app.program',
       'trybe-app.login',
       'trybe-app.profile',

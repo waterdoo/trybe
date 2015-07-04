@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:57:25
+* @Last Modified time: 2015-07-03 17:20:00
 */
 
 'use strict';
@@ -112,7 +112,7 @@
       }
       console.log('selected workout:', selection);
       WorkoutFactory.sendWorkout(selection, isNewWorkout, isForProgram);
-      $state.go('workout');
+      $state.go('createProgram');
     };
 
     $scope.init();

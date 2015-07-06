@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-03 17:41:09
+* @Last Modified time: 2015-07-06 12:30:32
 */
 
 'use strict';
@@ -40,6 +40,7 @@
     }
 
     $scope.initializeWorkout = function(type) {
+      console.log('in create program module, initializing workout');
       type = type || 'metcon';
       $scope.exerciseCount = 0;
       $scope.temp = {};
@@ -59,8 +60,8 @@
       //Initialize placeholder suggestions
       $scope.placeholders = {};
       if(type !== 'lift') {
-        $scope.placeholders.instructions = 'Perform 21, 15, 9 reps of:';
-        $scope.placeholders.exercise = 'Pull ups';
+        $scope.placeholders.instructions = 'ie. Perform 21, 15, 9 reps of:';
+        $scope.placeholders.exercise = 'ie. Pull ups';
       }
 
       $scope.workout = workout;

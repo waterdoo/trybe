@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-01 13:25:50
+* @Last Modified time: 2015-07-06 12:29:42
 */
 
 'use strict';
@@ -56,7 +56,8 @@
       });
     };
 
-    //saves to local storage
+    //saves to local storage and designates purpose of workout--
+    //either new workout, redo previous, or for program
     var sendWorkout = function(selection, isNew, forProgram) {
       workout = selection;
       isNewWorkout = isNew;

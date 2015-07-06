@@ -1,6 +1,6 @@
 <div class="workout">
 
-  <form ng-model="workout">
+  <form ng-model="createProgram">
 
     <!-- Copy workout state -->
     <fieldset ui-view='log' ng-if='!isEdittingWorkout'>
@@ -39,13 +39,13 @@
 
     <!-- Create state -->
     <fieldset ng-if='isEdittingWorkout' ui-view='create'>
-      <legend>Edit Program</legend>
+      <legend>Create Program</legend>
         <div class="form-group">
           <label for="type">Type</label>
           <div id="type" class="btn-group" role="group" aria-label="...">
-            <button type="button" ng-click="intializeWorkout('lift')" class="btn btn-default">Lift</button>
-            <button type="button" ng-click="intializeWorkout('metcon')" class="btn btn-default">Metcon</button>
-            <button type="button" ng-click="intializeWorkout('benchmark')" class="btn btn-default">Benchmark</button>
+            <button type="button" ng-click="initializeWorkout('lift')" class="btn btn-default">Lift</button>
+            <button type="button" ng-click="initializeWorkout('metcon')" class="btn btn-default">Metcon</button>
+            <button type="button" ng-click="initializeWorkout('benchmark')" class="btn btn-default">Benchmark</button>
           </div>
         </div>
 

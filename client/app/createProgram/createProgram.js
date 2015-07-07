@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 17:45:03
+* @Last Modified time: 2015-07-06 17:54:26
 */
 
 'use strict';
@@ -124,7 +124,12 @@
       console.log('createProgram module, orderVal:', orderVal);
       $scope.workout.order = orderVal;
       $scope.orders.push(orderVal);
-    }
+    };
+
+    $scope.refreshWorkout = function(){
+      $scope.getNextOrder();
+      $scope.initializeWorkout();
+    };
 
     //Add exercise to lift workout
     $scope.addExercise = function() {
@@ -160,6 +165,8 @@
       $scope.setOrderVal();
 
       ProgramFactory.postWorkout($scope.workout);
+
+      $scope.refreshWorkout();
     };
 
     $scope.finishProgram = function() {

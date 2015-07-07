@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-03 17:20:00
+* @Last Modified time: 2015-07-06 12:58:30
 */
 
 'use strict';
@@ -54,7 +54,7 @@
     $scope.getTrybeWorkouts = function() {
       ProgramFactory.getTrybeWorkouts($scope.username)
         .then(function(data){
-          //sort workouts by order
+          //sort workouts by order prop
           data.sort(function(a,b){
             if(a.order > b.order) {
               return 1;
@@ -92,9 +92,8 @@
       return html;
     },
 
-    //Sends workout data from user's selection to workout
-    //module so user can log workout
-    $scope.addWorkout = function(index) {
+    //Sends workout data from user's selection to createProgram module
+    $scope.editProgram = function(index) {
       var isNewWorkout;
       var selection;
       var isForProgram;

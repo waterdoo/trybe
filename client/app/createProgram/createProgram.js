@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 12:30:32
+* @Last Modified time: 2015-07-06 17:24:26
 */
 
 'use strict';
@@ -31,31 +31,41 @@
    */
   var CreateProgramCtrl = function ($scope, $state, AuthFactory, WorkoutFactory, ProgramFactory, NavFactory) {
 
-    if (!AuthFactory.isAuth()) {
-      $state.go('login');
-    } else {
+    $scope.init = function() {
+      $scope.data = {};
       $scope.username = AuthFactory.getUsername();
-      $scope.isEdittingWorkout = WorkoutFactory.isCreatingWorkout() !== false;
-      $scope.isForProgram = true;
-    }
+      $scope.isCreatingProgram = ProgramFactory.isCreatingProgram() !== false;
+      $scope.isForProgram = true; //delete?
+      $scope.data.daysPerWeek = 3;
+      $scope.orders = [0];
+
+      //Render proper state for program creation or edit workout
+      if($scope.isCreatingProgram) {
+        $scope.initializeWorkout();
+        $scope.getNextOrder();
+      } else {
+        //TO DO: Load user's selected workout to edit
+        $scope.workout = WorkoutFactory.getWorkout();
+      }
+    };
+
 
     $scope.initializeWorkout = function(type) {
-      console.log('in create program module, initializing workout');
       type = type || 'metcon';
       $scope.exerciseCount = 0;
       $scope.temp = {};
+
       var workout = {
         'type':type,
-        'exercises':[],
-        'finalResult':{
-        'type': (type !== 'lift') ? 'time' : null,
-        }
+        'exercises': [{
+          exerciseName: null,
+          quantity: [],
+          result: null
+        }],
+        'finalResult': {
+          'type': (type !== 'lift') ? 'time' : null
+        },
       };
-      workout.exercises.push({
-        exerciseName: null,
-        quantity: [],
-        result: null
-      });
 
       //Initialize placeholder suggestions
       $scope.placeholders = {};
@@ -67,6 +77,52 @@
       $scope.workout = workout;
       console.log('workout module obj', $scope.workout);
     };
+
+    //Initialize default next order num
+    $scope.getNextOrder = function(){
+      var nextOrder;
+
+      for(var i = 0; i < $scope.orders.length; i++) {
+        if($scope.orders[i+1] - $scope.orders[i] > 1) {
+          nextOrder = $scope.orders[i] + 1;
+          break;
+        } else if (i === $scope.orders.length - 1) {
+          nextOrder = $scope.orders[i] + 1;
+        }
+      }
+
+      $scope.data.nextOrder = nextOrder;
+
+      //Translate order val to week and day
+      $scope.renderWeek();
+      $scope.renderDay();
+    };
+
+    $scope.renderWeek = function() {
+      var week = Math.floor($scope.data.nextOrder/$scope.data.daysPerWeek) + 1;
+
+      if($scope.data.nextOrder % $scope.data.daysPerWeek === 0) {
+        week = week - 1;
+      }
+      console.log('renderWeek week:', week);
+      $scope.data.week = week;
+    };
+
+    $scope.renderDay = function() {
+      var day = $scope.data.nextOrder % $scope.data.daysPerWeek;
+
+      if($scope.data.nextOrder % $scope.data.daysPerWeek === 0) {
+        day = $scope.data.daysPerWeek;
+      }
+      $scope.data.day = day;
+    };
+
+    //Store user input workout order
+    $scope.setOrderVal = function(weekNum, dayNum) {
+      var orderVal = ($scope.data.daysPerWeek * weekNum) + dayNum;
+      $scope.workout.order = orderVal;
+      $scope.orders.push(orderVal);
+    }
 
     //Add exercise to lift workout
     $scope.addExercise = function() {
@@ -83,7 +139,26 @@
       $scope.workout.finalResult.type = type;
     };
 
-    $scope.log = function() {
+    $scope.save = function() {
+      //If user inputs a new exercise, add for them
+      if($scope.temp && $scope.temp.exName) {
+        $scope.addExercise();
+      }
+
+      //If user set a final result value, save for them
+      if($scope.temp && $scope.temp.finalResult) {
+        $scope.workout.finalResult.value = $scope.temp.finalResult;
+      }
+
+      //Finalize workout object
+      $scope.workout.username = AuthFactory.getUsername();
+      $scope.workout.trybe = $scope.workout.username + $scope.data.programName;
+      $scope.workout.days = $scope.getOrderNum();
+
+      ProgramFactory.postWorkout($scope.workout);
+    };
+
+    $scope.finishProgram = function() {
       //If user inputs a new exercise, add for them
       if($scope.temp && $scope.temp.exName) {
         $scope.addExercise();
@@ -98,18 +173,18 @@
       $scope.workout.username = AuthFactory.getUsername();
       $scope.workout.trybe = $scope.workout.username + 'trybe';
 
-      WorkoutFactory.postWorkout($scope.workout);
+      ProgramFactory.postWorkout($scope.workout);
 
       $state.go('program')
     };
 
-    //Initialize workout for log or program
-    if($scope.isEdittingWorkout) {
-      $scope.initializeWorkout();
+
+    if (!AuthFactory.isAuth()) {
+      $state.go('login');
     } else {
-      //TO DO: Load user's selected workout to edit
-      $scope.workout = WorkoutFactory.getWorkout();
+      $scope.init();
     }
+
   };
 
   // Entry point for module

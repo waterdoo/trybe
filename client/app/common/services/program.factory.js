@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:26:14
+* @Last Modified time: 2015-07-06 13:33:11
 */
 
 'use strict';
@@ -67,7 +67,8 @@
         });
     };
 
-    //saves to local storage
+    //Saves to local storage. Used for selecting workout from program
+    //to send to createProgram module
     var sendWorkout = function(selection, isNew) {
       workout = selection;
       isNewWorkout = isNew;
@@ -95,7 +96,7 @@
       return workout;
     };
 
-    var isCreatingWorkout = function() {
+    var isCreatingProgram = function() {
       return isNewWorkout;
     };
 
@@ -119,7 +120,7 @@
       postWorkout: postWorkout,
       getWorkout: getWorkout,
       selection: workoutSelectionStore,
-      isCreatingWorkout: isCreatingWorkout,
+      isCreatingProgram: isCreatingProgram,
       parseWorkouts: parseWorkouts
     };
   };

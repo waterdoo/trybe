@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 12:58:30
+* @Last Modified time: 2015-07-06 19:16:23
 */
 
 'use strict';
@@ -35,7 +35,8 @@
         $scope.data = {};
         $scope.username = AuthFactory.getUsername();
         $scope.getSchedule();
-        $scope.getTrybeWorkouts();
+        $scope.getAllWorkouts();
+        // $scope.sortByTrybe();
       }
     };
 
@@ -51,9 +52,10 @@
         });
     };
 
-    $scope.getTrybeWorkouts = function() {
-      ProgramFactory.getTrybeWorkouts($scope.username)
+    $scope.getAllWorkouts = function(trybe) {
+      ProgramFactory.getAllWorkouts($scope.username)
         .then(function(data){
+
           //sort workouts by order prop
           data.sort(function(a,b){
             if(a.order > b.order) {
@@ -64,12 +66,32 @@
             }
             return 0;
           });
-          $scope.data.workouts = data;
-          console.log('program module getTrybeWorkouts: ', $scope.data);
+          $scope.data.allWorkouts = data;
+          console.log('program module getAllWorkouts:', $scope.data.allWorkouts);
+          $scope.data.workouts = data.filter(function(element, index, array) {
+            if(element.trybe === element.username + 'Test5' && element.completed !== true) {
+              return true;
+            } else {
+              return false;
+            }
+          });
+          console.log('program module filtered workouts:', $scope.data.workouts);
         })
         .catch(function(error){
           console.error(error);
         });
+    };
+
+    $scope.sortByTrybe = function(trybe) {
+      console.log('sortByTrybe all workouts', $scope.data.allWorkouts);
+      //Only show uncompleted workouts from user's trybe
+      $scope.data.filtered = $scope.data.allWorkouts.filter(function(element, index, array) {
+        if(element.trybe === username + 'Test3' && element.completed !== true) {
+          return true;
+        } else {
+          return false;
+        }
+      });
     };
 
     $scope.renderWeekAndDay = function(workoutNum) {

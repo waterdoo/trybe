@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 15:25:15
+* @Last Modified time: 2015-07-06 19:15:08
 */
 'use strict';
 
@@ -41,6 +41,7 @@ module.exports = {
               type: req.body.type,
               title: req.body.title,
               description: req.body.description,
+              order: req.body.order,
               finalResult: JSON.stringify(req.body.finalResult),
               TrybeId: trybeID
             })
@@ -81,6 +82,7 @@ module.exports = {
             type: req.body.type,
             title: req.body.title,
             description: req.body.description,
+            order: req.body.order,
             finalResult: JSON.stringify(req.body.finalResult),
             TrybeId: trybeID
           })

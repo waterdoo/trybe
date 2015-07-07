@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 18:11:56
+* @Last Modified time: 2015-07-06 19:13:01
 */
 
 'use strict';
@@ -177,22 +177,7 @@
     };
 
     $scope.finishProgram = function() {
-      //If user inputs a new exercise, add for them
-      if($scope.temp && $scope.temp.exName) {
-        $scope.addExercise();
-      }
-
-      //If user set a final result value, save for them
-      if($scope.temp && $scope.temp.finalResult) {
-        $scope.workout.finalResult.value = $scope.temp.finalResult;
-      }
-
-      //Update workout's username and trybe
-      $scope.workout.username = AuthFactory.getUsername();
-      $scope.workout.trybe = $scope.workout.username + 'trybe';
-
-      ProgramFactory.postWorkout($scope.workout);
-
+      // $scope.save();
       $state.go('program')
     };
 

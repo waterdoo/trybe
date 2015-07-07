@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 17:29:14
+* @Last Modified time: 2015-07-06 18:47:44
 */
 
 'use strict';
@@ -32,26 +32,17 @@
       });
     };
 
-    var getTrybeWorkouts = function(username) {
+    var getAllWorkouts = function(username) {
       return $http({
         method: 'GET',
         url: '/api/workouts/individual',
         headers: { 'x-access-username': username }
       })
       .then(function (resp) {
-        console.log('in program factory, getTrybeWorkouts:', resp);
+        console.log('in program factory, getAllWorkouts:', resp);
         parseWorkouts(resp.data);
-        var trybeWorkouts = resp.data.filter(function(element, index, array) {
-          //Only show uncompleted workouts from user's trybe
-          if(element.trybe === username + 'trybe' && element.completed !== true) {
-            return true;
-          } else {
-            return false;
-          }
-        });
 
-        //return only workouts from user's log
-        return trybeWorkouts; //sends back data to controller
+        return resp.data; //sends back data to controller
       });
     };
 
@@ -115,7 +106,7 @@
 
     return {
       getTrybeSchedule: getTrybeSchedule,
-      getTrybeWorkouts: getTrybeWorkouts,
+      getAllWorkouts: getAllWorkouts,
       completeWorkout: completeWorkout,
       sendWorkout: sendWorkout,
       postWorkout: postWorkout,

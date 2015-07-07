@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:54:56
+* @Last Modified time: 2015-07-07 12:23:33
 */
 'use strict';
 
@@ -25,65 +25,16 @@ module.exports = {
       userID = user.get('id');
       //Acquire trybeID from Trybe table
       console.log('in workout controller - req.body.trybe', req.body.trybe);
-      Trybe.find({where: {name: req.body.trybe}}).then(function(trybe){
+      Trybe.findOrCreate({where: {name: req.body.trybe}}).then(function(trybe){
+        trybeID = trybe.get('id');
 
-        //if trybe doesn't yet exist, create
-        if(trybe === null) {
-          Trybe.build({
-            name: req.body.trybe
-          })
-          .save()
-          .then(function(newTrybe){
-            trybeID = newTrybe.get('id');
+          //   In progress: add entry to UserTrybe join table
+          //     User.addTrybe(newTrybe)
+          //     .then(function(){
+          //       newTrybe.addUser(user)
+          //     });
 
-            //add entry to UserTrybe join table
-            User.addTrybe(newTrybe)
-            .then(function(){
-              newTrybe.addUser(user)
-            });
-
-            //Insert data into Workout table - refactor repeat of below later
-            Workout.build({ // create table entry
-              UserId: userID,
-              type: req.body.type,
-              title: req.body.title,
-              description: req.body.description,
-              order: req.body.order,
-              finalResult: JSON.stringify(req.body.finalResult),
-              TrybeId: trybeID
-            })
-            .save() //save the table we just created into the database
-            .then(function(workout){
-
-              //Acquire the workoutID from Workout table
-              workoutID = workout.get('id');
-
-              //Insert all exercises into Exercises table
-              req.body.exercises.forEach(function(exercise){
-                Exercise.build({ // create table entry
-                  exerciseName: exercise.exerciseName,
-                  quantity: JSON.stringify(exercise.quantity),
-                  result: exercise.result,
-                  WorkoutId: workoutID
-                })
-                .save() // save table entry into the database
-                .then(function(newExercise){ // after the exercise is successfully saved, we send back a 200
-                  res.send(200);
-                })
-                .catch(function(error){ //if there is an error,  send back a 500 and console log the error
-                  console.error(error);
-                  res.send(500);
-                });
-              });
-            })
-            .catch(function(error){
-              console.error(error);
-              res.send(500);
-            });
-          })
-        } else {
-          trybeID = trybe.get('id');
-          //Insert data into Workout table
+          //Insert data into Workout table - refactor repeat of below later
           Workout.build({ // create table entry
             UserId: userID,
             type: req.body.type,
@@ -121,7 +72,6 @@ module.exports = {
             console.error(error);
             res.send(500);
           });
-          }
       });
     });
   },

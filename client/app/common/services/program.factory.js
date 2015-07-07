@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:34:16
+* @Last Modified time: 2015-07-07 15:23:31
 */
 
 'use strict';
@@ -41,7 +41,6 @@
       .then(function (resp) {
         console.log('in program factory, getAllWorkouts:', resp);
         parseWorkouts(resp.data);
-
         return resp.data; //sends back data to controller
       });
     };
@@ -78,7 +77,20 @@
           console.log('Workout added', response);
           return response.data;
         });
-      };
+    };
+
+    var saveTrybeSettings = function(settings) {
+      console.log('program factory, saveTrybeSettings');
+      return $http({
+        method: 'POST',
+        url: '/api/trybes/schedule',
+        data: settings
+      })
+        .then(function(response){
+          console.log('Workout added', response);
+          return response.data;
+        });
+    };
 
     var getWorkout = function() {
       if (workout === undefined) {
@@ -109,6 +121,7 @@
       getAllWorkouts: getAllWorkouts,
       completeWorkout: completeWorkout,
       sendWorkout: sendWorkout,
+      saveTrybeSettings: saveTrybeSettings,
       postWorkout: postWorkout,
       getWorkout: getWorkout,
       selection: workoutSelectionStore,

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:13:01
+* @Last Modified time: 2015-07-07 15:31:13
 */
 
 'use strict';
@@ -177,7 +177,14 @@
     };
 
     $scope.finishProgram = function() {
-      // $scope.save();
+      var trybeSettings = {
+        username: $scope.username,
+        name: $scope.data.programName,
+        days: $scope.data.daysPerWeek,
+        weeks: null
+      };
+
+      ProgramFactory.saveTrybeSettings(trybeSettings);
       $state.go('program')
     };
 

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-02 14:50:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 23:58:06
+* @Last Modified time: 2015-07-07 15:30:33
 */
 
 'use strict';
@@ -25,17 +25,27 @@ module.exports = {
   },
 
   setSchedule: function(req, res, next) {
-    var username = req.headers['x-access-username'];
-    var userTrybe = username + 'trybe';
-    var schedule = {};
+    var username = req.body.username;
 
-    Trybe.find({where: {name: userTrybe}})
-    .then(function(trybe){
+    //Give unique name so users can have overlapping
+    //trybe names
+    var trybeName = username + req.body.name;
+    var days = req.body.days;
+    var weeks = req.body.weeks;
+
+    Trybe.findOrCreate({where: {name: trybeName}})
+    .spread(function(trybe, created){
       trybe.updateAttributes({
-        weeks: req.body.weeks,
-        days: req.body.days
+        weeks: weeks,
+        days: days
       })
     })
-    .then(function() {});
+    .then(function() {
+      res.send(200);
+    })
+    .catch(function(error){
+      console.error(error);
+      res.send(500);
+    });
   }
 };

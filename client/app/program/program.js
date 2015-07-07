@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:16:23
+* @Last Modified time: 2015-07-06 19:39:59
 */
 
 'use strict';
@@ -40,6 +40,10 @@
       }
     };
 
+    $scope.getTrybes = function() {
+
+    };
+
     $scope.getSchedule = function() {
       ProgramFactory.getTrybeSchedule($scope.username)
         .then(function(schedule){
@@ -56,7 +60,7 @@
       ProgramFactory.getAllWorkouts($scope.username)
         .then(function(data){
 
-          //sort workouts by order prop
+          //Sort workouts by order prop
           data.sort(function(a,b){
             if(a.order > b.order) {
               return 1;
@@ -66,15 +70,17 @@
             }
             return 0;
           });
-          $scope.data.allWorkouts = data;
-          console.log('program module getAllWorkouts:', $scope.data.allWorkouts);
-          $scope.data.workouts = data.filter(function(element, index, array) {
-            if(element.trybe === element.username + 'Test5' && element.completed !== true) {
-              return true;
-            } else {
-              return false;
-            }
-          });
+          // $scope.data.allWorkouts = data;
+          $scope.data.workouts = data;
+
+          //Show only uncompleted workouts from a specific trybe
+          // $scope.data.workouts = data.filter(function(element, index, array) {
+          //   if(element.trybe === element.username + 'Test5' && element.completed !== true) {
+          //     return true;
+          //   } else {
+          //     return false;
+          //   }
+          // });
           console.log('program module filtered workouts:', $scope.data.workouts);
         })
         .catch(function(error){

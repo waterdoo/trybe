@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:15:08
+* @Last Modified time: 2015-07-06 19:54:56
 */
 'use strict';
 
@@ -35,6 +35,13 @@ module.exports = {
           .save()
           .then(function(newTrybe){
             trybeID = newTrybe.get('id');
+
+            //add entry to UserTrybe join table
+            User.addTrybe(newTrybe)
+            .then(function(){
+              newTrybe.addUser(user)
+            });
+
             //Insert data into Workout table - refactor repeat of below later
             Workout.build({ // create table entry
               UserId: userID,
@@ -139,20 +146,24 @@ module.exports = {
     console.log(user);
     User.find ({where: {username: user}}).then(function(user){ // find the user
       user.getTrybes().then(function(trybes){ //will return an array of trybe objects
-        console.log(trybes);
+        console.log('workoutController getAllWorkouts trybe objs',trybes);
         async.eachSeries(trybes, function(trybe, outerNext){ // go through each trybe
           trybe.getWorkouts().then(function(workouts){ // get all workouts associated with the trybe
             async.eachSeries(workouts, function(workout, innerNext){ // go through each workout in each trybe
               Exercise.findAll({where: {workoutID: workout.get('id')}}).then(function(exercises){ // finds all exercises for each workout
                 User.find({where: {id: workout.get('UserId')}}).then(function(workoutUser){
                   var workoutObj = { // create the workout object in the proper format
+                    id: workout.get('id'),
+                    order: workout.get('order'),
                     username: workoutUser.get('username'),
+                    date: workout.get('createdAt'),
                     trybe: trybe.get('name'),
                     type: workout.get('type'),
                     title: workout.get('title'),
                     description: workout.get('description'),
                     exercises: exercises,
-                    finalResult: workout.get('finalResult')
+                    finalResult: workout.get('finalResult'),
+                    completed: workout.get('completed')
                   };
                   workoutsArray.push(workoutObj);
                   innerNext();// this callback lets the async each know to move on to the next value

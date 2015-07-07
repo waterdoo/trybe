@@ -1,12 +1,16 @@
 <div class="program">
 
-  <!-- Input for Workouts/week and Length of Program -->
-  <div>Program Weeks<input ng-model="data.weeks" type="text"></input></div>
-  <div>Workouts Per Week<input ng-model="data.days" type="text"></input></div>
+  <!-- Filters workouts by trybe -->
+  <select class="trybeDropDown" ng-repeat="trybes in data.trybes">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
 
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">
-    <button type="button" ng-click="editProgram()" class="btn btn-default create">Add Workout</button>
+    <button type="button" ng-click="editProgram()" class="btn btn-default create">Edit Program</button>
   </div>
 
   <div class="nextUp">Next Up</div>

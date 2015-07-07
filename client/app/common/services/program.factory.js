@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 13:33:11
+* @Last Modified time: 2015-07-06 17:29:14
 */
 
 'use strict';
@@ -77,6 +77,7 @@
     };
 
     var postWorkout = function(workout) {
+      console.log('program factory, post workout, workout:', workout);
       return $http({
         method: 'POST',
         url: '/api/workouts',

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 17:24:26
+* @Last Modified time: 2015-07-06 17:45:03
 */
 
 'use strict';
@@ -114,12 +114,14 @@
       if($scope.data.nextOrder % $scope.data.daysPerWeek === 0) {
         day = $scope.data.daysPerWeek;
       }
+      console.log('renderDay day:', day);
       $scope.data.day = day;
     };
 
     //Store user input workout order
-    $scope.setOrderVal = function(weekNum, dayNum) {
-      var orderVal = ($scope.data.daysPerWeek * weekNum) + dayNum;
+    $scope.setOrderVal = function() {
+      var orderVal = $scope.data.daysPerWeek * ($scope.data.week - 1) + $scope.data.day;
+      console.log('createProgram module, orderVal:', orderVal);
       $scope.workout.order = orderVal;
       $scope.orders.push(orderVal);
     }
@@ -153,7 +155,9 @@
       //Finalize workout object
       $scope.workout.username = AuthFactory.getUsername();
       $scope.workout.trybe = $scope.workout.username + $scope.data.programName;
-      $scope.workout.days = $scope.getOrderNum();
+
+      //Save order val to workout obj
+      $scope.setOrderVal();
 
       ProgramFactory.postWorkout($scope.workout);
     };

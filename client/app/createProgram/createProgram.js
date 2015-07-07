@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 17:54:26
+* @Last Modified time: 2015-07-06 18:11:56
 */
 
 'use strict';
@@ -80,6 +80,7 @@
 
     //Initialize default next order num
     $scope.getNextOrder = function(){
+      console.log('getNextOrder $scope.orders:', $scope.orders);
       var nextOrder;
 
       for(var i = 0; i < $scope.orders.length; i++) {
@@ -123,7 +124,13 @@
       var orderVal = $scope.data.daysPerWeek * ($scope.data.week - 1) + $scope.data.day;
       console.log('createProgram module, orderVal:', orderVal);
       $scope.workout.order = orderVal;
+
+      //Insert order val to orders array and sort
+      //so getNextOrder finds correct val
       $scope.orders.push(orderVal);
+      $scope.orders.sort(function(a,b){
+        return a-b;
+      });
     };
 
     $scope.refreshWorkout = function(){

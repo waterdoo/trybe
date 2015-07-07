@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 12:23:33
+* @Last Modified time: 2015-07-07 12:52:32
 */
 'use strict';
 
@@ -25,14 +25,15 @@ module.exports = {
       userID = user.get('id');
       //Acquire trybeID from Trybe table
       console.log('in workout controller - req.body.trybe', req.body.trybe);
-      Trybe.findOrCreate({where: {name: req.body.trybe}}).then(function(trybe){
+      Trybe.findOrCreate({where: {name: req.body.trybe}})
+      .spread(function(trybe, created){
+        //created returns true or false
         trybeID = trybe.get('id');
 
-          //   In progress: add entry to UserTrybe join table
-          //     User.addTrybe(newTrybe)
-          //     .then(function(){
-          //       newTrybe.addUser(user)
-          //     });
+          //If created is true, ADD new association
+          user.setTrybes(trybe).then(function() {
+            console.log('in workout controller, saveWorkout, user & trybe relationship set!');
+          });
 
           //Insert data into Workout table - refactor repeat of below later
           Workout.build({ // create table entry

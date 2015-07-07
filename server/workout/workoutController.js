@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 12:52:32
+* @Last Modified time: 2015-07-07 13:01:27
 */
 'use strict';
 
@@ -31,9 +31,11 @@ module.exports = {
         trybeID = trybe.get('id');
 
           //If created is true, ADD new association
-          user.setTrybes(trybe).then(function() {
-            console.log('in workout controller, saveWorkout, user & trybe relationship set!');
-          });
+          if(created === true) {
+            user.addTrybes(trybe).then(function() {
+              console.log('in workout controller, saveWorkout, user & trybe relationship set!');
+            });
+          }
 
           //Insert data into Workout table - refactor repeat of below later
           Workout.build({ // create table entry

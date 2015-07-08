@@ -2,7 +2,7 @@
 
   <!-- Filters workouts by trybe -->
   <select class="trybeDropDown" ng-model="data.trybe" ng-change="filterWorkouts()">
-    <option ng-repeat="(key, value) in data.trybes" value="{{key}}">{{key}}</option>
+    <option ng-repeat="trybe in data.trybes track by $index" value="{{trybe}}">{{trybe}}</option>
   </select>
 
   <!-- Create workout button sends user to workout module -->

@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 16:07:22
+* @Last Modified time: 2015-07-08 16:57:05
 */
 
 'use strict';
@@ -34,20 +34,21 @@
       } else {
         $scope.data = {};
         $scope.data.workouts = [];
-        $scope.data.trybes = {};
-        $scope.data.trybe = 'all';
+        $scope.data.uniqTrybes = {};
+        $scope.data.trybes = [];
+        $scope.data.trybe;
         $scope.username = AuthFactory.getUsername();
         $scope.getAllWorkoutsAndTrybes();
-        $scope.getSchedule();
+        // $scope.getSchedule();
       }
     };
 
     $scope.initializeTrybes = function(trybe) {
-      if(!$scope.data.trybes.hasOwnProperty(trybe)) {
-        $scope.data.trybes[trybe] = true;
+      if(!$scope.data.uniqTrybes.hasOwnProperty(trybe)) {
+        $scope.data.uniqTrybes[trybe] = trybe;
+        $scope.data.trybes.push(trybe);
       }
     };
-
 
     $scope.getAllWorkoutsAndTrybes = function(trybe) {
       ProgramFactory.getAllWorkouts($scope.username)
@@ -80,30 +81,23 @@
     };
 
     $scope.filterWorkouts = function() {
-      //If rendering all workouts, show all
-      if($scope.data.trybe === 'all') {
-        $scope.data.workouts = $scope.data.allWorkouts.filter(function(element) {
-          if(element.completed !== true) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      } else {
-        //Only show uncompleted workouts from one trybe
-        $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
-          if(element.trybe === $scope.data.trybe && element.completed !== true) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
+      //If user hasn't selected trybe yet, select first
+      $scope.data.trybe = $scope.data.trybe || $scope.data.trybes[0];
+
+      //Only show uncompleted workouts from one trybe
+      $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
+        if(element.trybe === $scope.data.trybe && element.completed !== true) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      $scope.getSchedule();
     };
 
-    //TO DO: pulls schedule for each trybe
     $scope.getSchedule = function() {
-      ProgramFactory.getTrybeSchedule('NorCal S&C On-Ramp')
+      ProgramFactory.getTrybeSchedule($scope.data.trybe)
         .then(function(schedule){
           $scope.data.days = schedule.days || 5;
           $scope.data.weeks = schedule.weeks || 12;

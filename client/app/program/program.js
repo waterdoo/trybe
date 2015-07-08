@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 19:39:59
+* @Last Modified time: 2015-07-07 17:26:20
 */
 
 'use strict';
@@ -33,15 +33,72 @@
         $state.go('login');
       } else {
         $scope.data = {};
+        $scope.data.workouts = [];
+        $scope.data.trybes = {};
+        $scope.data.trybe = 'all';
         $scope.username = AuthFactory.getUsername();
+        $scope.getAllWorkoutsAndTrybes();
         $scope.getSchedule();
-        $scope.getAllWorkouts();
-        // $scope.sortByTrybe();
       }
     };
 
-    $scope.getTrybes = function() {
+    $scope.initializeTrybes = function(trybe) {
+      if(!$scope.data.trybes.hasOwnProperty(trybe)) {
+        $scope.data.trybes[trybe] = true;
+      }
+    };
 
+
+    $scope.getAllWorkoutsAndTrybes = function(trybe) {
+      ProgramFactory.getAllWorkouts($scope.username)
+        .then(function(allWorkouts){
+
+          //Sort workouts by order prop
+          allWorkouts.sort(function(a,b){
+            if(a.order > b.order) {
+              return 1;
+            }
+            if(a.order < b.order) {
+              return -1;
+            }
+            return 0;
+          });
+
+          // Traverse workouts to init trybes,
+          // and show only uncompleted workouts from one trybe
+          allWorkouts.forEach(function(workout){
+            $scope.initializeTrybes(workout.trybe);
+          });
+
+          $scope.data.allWorkouts = allWorkouts;
+
+          $scope.filterWorkouts();
+        })
+        .catch(function(error){
+          console.error(error);
+        });
+    };
+
+    $scope.filterWorkouts = function() {
+      //If rendering all workouts, show all
+      if($scope.data.trybe === 'all') {
+        $scope.data.workouts = $scope.data.allWorkouts.filter(function(element) {
+          if(element.completed !== true) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      } else {
+        //Only show uncompleted workouts from one trybe
+        $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
+          if(element.trybe === $scope.data.trybe && element.completed !== true) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
     };
 
     $scope.getSchedule = function() {
@@ -54,50 +111,6 @@
         .catch(function(error){
           console.error(error);
         });
-    };
-
-    $scope.getAllWorkouts = function(trybe) {
-      ProgramFactory.getAllWorkouts($scope.username)
-        .then(function(data){
-
-          //Sort workouts by order prop
-          data.sort(function(a,b){
-            if(a.order > b.order) {
-              return 1;
-            }
-            if(a.order < b.order) {
-              return -1;
-            }
-            return 0;
-          });
-          // $scope.data.allWorkouts = data;
-          $scope.data.workouts = data;
-
-          //Show only uncompleted workouts from a specific trybe
-          // $scope.data.workouts = data.filter(function(element, index, array) {
-          //   if(element.trybe === element.username + 'Test5' && element.completed !== true) {
-          //     return true;
-          //   } else {
-          //     return false;
-          //   }
-          // });
-          console.log('program module filtered workouts:', $scope.data.workouts);
-        })
-        .catch(function(error){
-          console.error(error);
-        });
-    };
-
-    $scope.sortByTrybe = function(trybe) {
-      console.log('sortByTrybe all workouts', $scope.data.allWorkouts);
-      //Only show uncompleted workouts from user's trybe
-      $scope.data.filtered = $scope.data.allWorkouts.filter(function(element, index, array) {
-        if(element.trybe === username + 'Test3' && element.completed !== true) {
-          return true;
-        } else {
-          return false;
-        }
-      });
     };
 
     $scope.renderWeekAndDay = function(workoutNum) {

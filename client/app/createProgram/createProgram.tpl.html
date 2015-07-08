@@ -2,46 +2,10 @@
 
   <form ng-model="createProgram">
 
-    <!-- Copy workout state -->
-    <fieldset ui-view='log' ng-if='!isCreatingProgram'>
-      <legend>Edit Workout</legend>
-        <div class="form-group">
-          <label for="type">Type: {{workout.type}}</label>
-        </div>
-
-        <!-- Display workout instructions -->
-        <div class="form-group">
-
-          <!-- If workout is lift, show exercise list -->
-          <ul ng-if="workout.type === 'lift'" class="exercise-list">
-            <label for="exercises">Exercises</label>
-            <li ng-repeat="ex in workout.exercises track by $index">
-              <div>{{ex.exerciseName}}</div>
-              <!--if workout is lift, show quantity & results-->
-              <div class="workout-quantity">{{printWorkoutQuantity(ex)}}
-                <div>Max Weight: <input ng-model="workout.exercises[$index].result" type="text" value="{{ex.result}}"></input></div>
-              </div>
-            </li>
-          </ul>
-
-          <!-- If workout isn't a lift -->
-          <div ng-if="workout.type !== 'lift'">
-            <label for="description">Instructions</label>
-            <textarea id="description" class="form-control instructions" placeholder="Instructions: ">{{workout.description}}</textarea>
-            <label for="result">{{workout.finalResult.type}}</label>
-            <input ng-model="workout.finalResult.value"></input>
-          </div>
-
-          <!-- Log button posts workout data to server -->
-          <button class="btn-block" type="button" ng-click="log()" class="btn btn-default">Log</button>
-        </div>
-    </fieldset>
-
-    <!-- Create state -->
-    <fieldset ui-view='log' ng-if='isCreatingProgram'>
-    <legend>Create Program</legend>
+    <fieldset ui-view='log'>
+    <legend>Edit program</legend>
     <!-- Initialize program settings -->
-      <div>Program Name<input ng-model="data.programName" type="text"></input></div>
+      <div>trybe<input ng-model="data.programName" type="text"></input></div>
       <div>Days per week<input ng-model="data.daysPerWeek" type="text"></input></div>
         <!-- Initialize workout creation -->
         <div class="form-group">

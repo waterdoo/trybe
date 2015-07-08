@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 15:31:13
+* @Last Modified time: 2015-07-08 14:01:04
 */
 
 'use strict';
@@ -29,23 +29,24 @@
    * record workout results.
    * @param {angular} $scope
    */
-  var CreateProgramCtrl = function ($scope, $state, AuthFactory, WorkoutFactory, ProgramFactory, NavFactory) {
+  var CreateProgramCtrl = function ($scope, $state, AuthFactory, ProgramFactory, NavFactory) {
 
     $scope.init = function() {
       $scope.data = {};
       $scope.username = AuthFactory.getUsername();
       $scope.isCreatingProgram = ProgramFactory.isCreatingProgram() !== false;
-      $scope.isForProgram = true; //delete?
+      console.log('isCreatingProgram: ', $scope.isCreatingProgram);
       $scope.data.daysPerWeek = 3;
       $scope.orders = [0];
 
-      //Render proper state for program creation or edit workout
+      //If creating new program, initialize workout
       if($scope.isCreatingProgram) {
         $scope.initializeWorkout();
         $scope.getNextOrder();
       } else {
-        //TO DO: Load user's selected workout to edit
-        $scope.workout = WorkoutFactory.getWorkout();
+        //Else load user's selected workout to edit
+        $scope.workout = ProgramFactory.getWorkout();
+        $scope.loadTrybeWorkout();
       }
     };
 
@@ -97,6 +98,17 @@
       //Translate order val to week and day
       $scope.renderWeek();
       $scope.renderDay();
+    };
+
+    $scope.loadTrybeWorkout = function(){
+      //Load trybe name
+      $scope.data.programName = $scope.workout.trybe;
+
+      ProgramFactory.getTrybeSchedule($scope.workout.trybe)
+      .then(function(schedule){
+        var trybeSchedule = schedule;
+        console.log('trybeSchedule:', trybeSchedule);
+      });
     };
 
     $scope.renderWeek = function() {

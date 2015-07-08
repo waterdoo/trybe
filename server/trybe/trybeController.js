@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-02 14:50:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 15:30:33
+* @Last Modified time: 2015-07-08 14:00:36
 */
 
 'use strict';
@@ -12,11 +12,11 @@ var User = require('../models').user;
 
 module.exports = {
   getSchedule: function(req, res, next) {
-    var username = req.headers['x-access-username'];
-    var userTrybe = username + 'trybe';
+    var trybeName = req.headers['x-access-trybe'];
+    console.log('trybeController trybeName:', trybeName);
     var schedule = {};
 
-    Trybe.find({where: {name: userTrybe}})
+    Trybe.find({where: {name: trybeName}})
     .then(function(trybe){
       schedule.weeks = trybe.get('weeks');
       schedule.days = trybe.get('days');

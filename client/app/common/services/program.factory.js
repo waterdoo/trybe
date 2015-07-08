@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 15:23:31
+* @Last Modified time: 2015-07-08 14:00:02
 */
 
 'use strict';
@@ -20,11 +20,11 @@
     var workoutSelectionStore = 'com.trybe.selectedWorkout';
     var localStorage = $window.localStorage;
 
-    var getTrybeSchedule = function(username) {
+    var getTrybeSchedule = function(trybeName) {
       return $http({
         method: 'GET',
         url: '/api/trybes/schedule',
-        headers: { 'x-access-username': username }
+        headers: { 'x-access-trybe': trybeName }
       })
       .then(function(resp) {
         console.log('in getTrybeSchedule, resp:', resp);

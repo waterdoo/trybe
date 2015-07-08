@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-07 17:26:20
+* @Last Modified time: 2015-07-08 13:04:51
 */
 
 'use strict';
@@ -26,7 +26,7 @@
    * controls feed state from client side
    * @param {angular} $scope
    */
-  var ProgramCtrl = function ($scope, $location, $state, $window, ProgramFactory, WorkoutFactory, AuthFactory, NavFactory) {
+  var ProgramCtrl = function ($scope, $location, $state, $window, ProgramFactory, AuthFactory, NavFactory) {
 
     $scope.init = function() {
       if(!AuthFactory.isAuth()) {
@@ -146,12 +146,13 @@
         isNewWorkout = false;
         isForProgram = false;
       } else {
+      //Else load blank workout
         selection = null;
         isNewWorkout = true;
         isForProgram = true;
       }
       console.log('selected workout:', selection);
-      WorkoutFactory.sendWorkout(selection, isNewWorkout, isForProgram);
+      ProgramFactory.sendWorkout(selection, isNewWorkout, isForProgram);
       $state.go('createProgram');
     };
 

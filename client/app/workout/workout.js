@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:26:25
+* @Last Modified time: 2015-07-08 12:55:40
 */
 
 'use strict';
@@ -60,7 +60,7 @@
 
     $scope.loadNextWorkout = function() {
       //Load next workout from user's workout program
-      ProgramFactory.getTrybeWorkouts($scope.username)
+      ProgramFactory.getAllWorkouts($scope.username)
         .then(function(workouts) {
           $scope.workout = workouts[0];
           //if no workouts in program, default to blank workout

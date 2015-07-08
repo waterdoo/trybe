@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 13:54:39
+* @Last Modified time: 2015-07-08 16:27:58
 */
 'use strict';
 
@@ -24,20 +24,18 @@ module.exports = {
     User.find({where: {username: req.body.username}}).then(function(user){
       userID = user.get('id');
       //Acquire trybeID from Trybe table
-      console.log('in workout controller - req.body.trybe', req.body.trybe);
       Trybe.findOrCreate({where: {name: req.body.trybe}})
       .spread(function(trybe, created){
         //created returns true or false
         trybeID = trybe.get('id');
 
-          //If created is true, ADD new association
+          //If created is true, add new association
           if(created === true) {
             user.addTrybes(trybe).then(function() {
               console.log('in workout controller, saveWorkout, user & trybe relationship set!');
             });
           }
 
-          //Insert data into Workout table - refactor repeat of below later
           Workout.build({ // create table entry
             UserId: userID,
             type: req.body.type,
@@ -79,6 +77,52 @@ module.exports = {
     });
   },
 
+  editWorkout: function(req, res, next){
+    //updates workout
+    Workout.find({where: {id: req.body.id}})
+    .then(function(workout){
+      workout.updateAttributes({
+        type: req.body.type,
+        description: req.body.description,
+        finalResult: JSON.stringify(req.body.finalResult),
+      })
+      // .save()
+      .then(function(updatedWorkout){
+        //Acquire the workoutID from Workout table
+        var workoutID = updatedWorkout.get('id');
+        console.log('workoutID', workoutID);
+
+        //Delete all previous exercises of workout
+        Exercise.destroy({where: {workoutID: updatedWorkout.get('id')}});
+
+        console.log('editWorkout req.body.exercises', req.body.exercises);
+
+        //Insert all exercises into Exercises table
+        req.body.exercises.forEach(function(exercise){
+          Exercise.build({ // create table entry
+            exerciseName: exercise.exerciseName,
+            quantity: JSON.stringify(exercise.quantity),
+            result: exercise.result,
+            WorkoutId: workoutID
+          })
+          .save() // save table entry into the database
+          .then(function(newExercise){ // after the exercise is successfully saved, we send back a 200
+            res.sendStatus(200);
+          })
+          .catch(function(error){ //if there is an error,  send back a 500 and console log the error
+            console.error(error);
+            res.sendStatus(500);
+          });
+        });
+      })
+      .catch(function(error){
+        console.error(error);
+        res.sendStatus(500);
+      });
+    })
+    .then(function() {});
+  },
+
   completeWorkout: function(req, res, next){
     //delete workouts where id = req.body.id
     Workout.find({where: {id: req.body.id}})
@@ -88,7 +132,6 @@ module.exports = {
       })
     })
     .then(function() {});
-
   },
 
 // This function will go into the database and find all workouts from all of the trybes that the user is a part of and return that

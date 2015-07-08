@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 14:07:21
+* @Last Modified time: 2015-07-08 16:14:10
 */
 
 'use strict';
@@ -84,6 +84,7 @@
       console.log('getNextOrder $scope.orders:', $scope.orders);
       var nextOrder;
 
+      //Determine default next workout in week/day for user
       for(var i = 0; i < $scope.orders.length; i++) {
         if($scope.orders[i+1] - $scope.orders[i] > 1) {
           nextOrder = $scope.orders[i] + 1;
@@ -104,10 +105,16 @@
       //Load trybe name
       $scope.data.programName = $scope.workout.trybe;
 
+      //Load trybe schedule
       ProgramFactory.getTrybeSchedule($scope.workout.trybe)
       .then(function(schedule){
         console.log('schedule:', schedule);
         $scope.data.daysPerWeek = schedule.days;
+
+        //Load week/day
+        $scope.data.nextOrder = $scope.workout.order;
+        $scope.renderWeek();
+        $scope.renderDay();
       });
     };
 
@@ -175,27 +182,37 @@
         $scope.workout.finalResult.value = $scope.temp.finalResult;
       }
 
+      //Save order val to workout obj if creating program
+      if($scope.isCreatingProgram) {
+        $scope.setOrderVal();
+      }
+
       //Finalize workout object
       $scope.workout.username = AuthFactory.getUsername();
-      $scope.workout.trybe = $scope.workout.username + $scope.data.programName;
+      $scope.workout.trybe = $scope.data.programName;
 
-      //Save order val to workout obj
-      $scope.setOrderVal();
-
-      ProgramFactory.postWorkout($scope.workout);
-
-      $scope.refreshWorkout();
-    };
-
-    $scope.finishProgram = function() {
+      //Save trybe settings
       var trybeSettings = {
         username: $scope.username,
         name: $scope.data.programName,
         days: $scope.data.daysPerWeek,
         weeks: null
       };
-
       ProgramFactory.saveTrybeSettings(trybeSettings);
+
+      //If creating program, create workout
+      //Else, update workout
+      if($scope.isCreatingProgram) {
+        ProgramFactory.postWorkout($scope.workout);
+      } else {
+        //Else is editting workout
+        ProgramFactory.editWorkout($scope.workout);
+      }
+
+      $scope.refreshWorkout();
+    };
+
+    $scope.finishProgram = function() {
       $state.go('program')
     };
 

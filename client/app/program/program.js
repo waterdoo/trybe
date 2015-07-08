@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 13:04:51
+* @Last Modified time: 2015-07-08 16:07:22
 */
 
 'use strict';
@@ -101,8 +101,9 @@
       }
     };
 
+    //TO DO: pulls schedule for each trybe
     $scope.getSchedule = function() {
-      ProgramFactory.getTrybeSchedule($scope.username)
+      ProgramFactory.getTrybeSchedule('NorCal S&C On-Ramp')
         .then(function(schedule){
           $scope.data.days = schedule.days || 5;
           $scope.data.weeks = schedule.weeks || 12;

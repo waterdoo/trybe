@@ -3,18 +3,29 @@
   <form ng-model="createProgram">
 
     <fieldset ui-view='log'>
-    <legend>Edit program</legend>
+    <legend ng-if="isCreatingProgram">Create trybe program</legend>
+    <legend ng-if="!isCreatingProgram">Edit Workout</legend>
+
     <!-- Initialize program settings -->
-      <div>trybe<input ng-model="data.programName" type="text"></input></div>
+      <!-- If program is new, allow user to set.
+      If editing, set as fixed -->
+      <div ng-if="isCreatingProgram">trybe<input ng-model="data.programName" type="text"></input></div>
+      <div ng-if="!isCreatingProgram">trybe {{data.programName}}</div>
+
       <div>Days per week<input ng-model="data.daysPerWeek" type="text"></input></div>
         <!-- Initialize workout creation -->
-        <div class="form-group">
+        <div class="form-group">Workout
         <div>
-          <span>Workout for Week
-            <input ng-model="data.week" type="number" class="weekAndDay"></input>
+          <!-- If creating, enable editing -->
+          <span>Week
+            <input ng-if="isCreatingProgram" ng-model="data.week" type="number" class="weekAndDay"></input>
+            <span ng-if="!isCreatingProgram" class="weekAndDay">{{data.week}}</span>
           </span>
+
+          <!-- If creating, enable editing -->
           <span>Day
-            <input ng-model="data.day" type="number" class="weekAndDay"></input>
+            <input ng-if="isCreatingProgram" ng-model="data.day" type="number" class="weekAndDay"></input>
+            <span ng-if="!isCreatingProgram" class="weekAndDay">{{data.day}}</span>
           </span>
         </div>
 

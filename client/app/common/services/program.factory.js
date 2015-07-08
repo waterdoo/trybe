@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:54:34
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 14:00:02
+* @Last Modified time: 2015-07-08 16:16:30
 */
 
 'use strict';
@@ -79,6 +79,18 @@
         });
     };
 
+    var editWorkout = function(workout) {
+      return $http({
+        method: 'POST',
+        url: '/api/workouts/edit',
+        data: workout
+      })
+        .then(function(response){
+          console.log('Workout added', response);
+          return response.data;
+        });
+    };
+
     var saveTrybeSettings = function(settings) {
       console.log('program factory, saveTrybeSettings');
       return $http({
@@ -123,6 +135,7 @@
       sendWorkout: sendWorkout,
       saveTrybeSettings: saveTrybeSettings,
       postWorkout: postWorkout,
+      editWorkout: editWorkout,
       getWorkout: getWorkout,
       selection: workoutSelectionStore,
       isCreatingProgram: isCreatingProgram,

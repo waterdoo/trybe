@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-02 14:50:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 14:00:36
+* @Last Modified time: 2015-07-08 16:01:59
 */
 
 'use strict';
@@ -26,10 +26,7 @@ module.exports = {
 
   setSchedule: function(req, res, next) {
     var username = req.body.username;
-
-    //Give unique name so users can have overlapping
-    //trybe names
-    var trybeName = username + req.body.name;
+    var trybeName = req.body.name;
     var days = req.body.days;
     var weeks = req.body.weeks;
 

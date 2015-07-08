@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 14:01:04
+* @Last Modified time: 2015-07-08 14:07:21
 */
 
 'use strict';
@@ -36,11 +36,11 @@
       $scope.username = AuthFactory.getUsername();
       $scope.isCreatingProgram = ProgramFactory.isCreatingProgram() !== false;
       console.log('isCreatingProgram: ', $scope.isCreatingProgram);
-      $scope.data.daysPerWeek = 3;
       $scope.orders = [0];
 
       //If creating new program, initialize workout
       if($scope.isCreatingProgram) {
+        $scope.data.daysPerWeek = 3;
         $scope.initializeWorkout();
         $scope.getNextOrder();
       } else {
@@ -106,8 +106,8 @@
 
       ProgramFactory.getTrybeSchedule($scope.workout.trybe)
       .then(function(schedule){
-        var trybeSchedule = schedule;
-        console.log('trybeSchedule:', trybeSchedule);
+        console.log('schedule:', schedule);
+        $scope.data.daysPerWeek = schedule.days;
       });
     };
 
@@ -123,7 +123,6 @@
 
     $scope.renderDay = function() {
       var day = $scope.data.nextOrder % $scope.data.daysPerWeek;
-
       if($scope.data.nextOrder % $scope.data.daysPerWeek === 0) {
         day = $scope.data.daysPerWeek;
       }

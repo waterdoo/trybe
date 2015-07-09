@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 16:14:10
+* @Last Modified time: 2015-07-08 17:12:50
 */
 
 'use strict';
@@ -198,14 +198,15 @@
         days: $scope.data.daysPerWeek,
         weeks: null
       };
-      ProgramFactory.saveTrybeSettings(trybeSettings);
 
-      //If creating program, create workout
+      //If creating program, save workout trybe settings
       //Else, update workout
       if($scope.isCreatingProgram) {
-        ProgramFactory.postWorkout($scope.workout);
+        ProgramFactory.postWorkout($scope.workout)
+        .then(function() {
+          ProgramFactory.saveTrybeSettings(trybeSettings);
+        });
       } else {
-        //Else is editting workout
         ProgramFactory.editWorkout($scope.workout);
       }
 

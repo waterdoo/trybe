@@ -1,8 +1,8 @@
-/* 
+/*
 * @Author: nimi
 * @Date:   2015-05-05 16:15:10
-* @Last Modified by:   nimi
-* @Last Modified time: 2015-05-11 17:01:44
+* @Last Modified by:   VINCE
+* @Last Modified time: 2015-07-09 12:07:44
 */
 
 'use strict';
@@ -10,6 +10,7 @@
 var LocalStrategy = require ('passport-local').Strategy;
 var User = require('../models').user;
 var Trybe = require('../models').trybe;
+var Plan = require('../models').plan;
 
 module.exports = function(passport){
 
@@ -63,6 +64,8 @@ passport.use('local-signup', new LocalStrategy(
                 console.log('relationship set!');
               });
             });
+            //set new plan for user
+            Plan.build({UserId: user.get('id')}).save()
             return done(null, user);
           })
           .catch(function(err){ // error handling

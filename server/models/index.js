@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-05 13:33:15
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 13:25:39
+* @Last Modified time: 2015-07-09 11:42:18
 */
 
 //This file is used to coordinate all the schemas
@@ -22,7 +22,7 @@ var sequelize = new Sequelize(database, username , password, {
 });
 
 // load models
-var models = ['user', 'workout', 'trybe', 'exercise'];
+var models = ['user', 'workout', 'trybe', 'exercise', 'plan'];
 models.forEach(function(model){
   // sequelize.import will load models that have been defined in other files
   module.exports[model] = sequelize.import(__dirname + '/' + model + 'Schema');
@@ -41,6 +41,9 @@ models.forEach(function(model){
 
   module.trybe.belongsToMany(module.user, {through : 'UserTrybe'});
   module.user.belongsToMany(module.trybe, {through : 'UserTrybe'});
+
+  module.user.hasOne(module.plan);
+  module.plan.belongsTo(module.user);
 
 }(module.exports));
 

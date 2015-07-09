@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-05 10:14:44
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-02 14:53:31
+* @Last Modified time: 2015-07-09 11:32:50
 */
 'use strict';
 //this file will be used to interpret and route http requests
@@ -17,6 +17,7 @@ module.exports = function(app, express, passport){
   var userRouter = express.Router();
   var workoutRouter = express.Router();
   var trybeRouter = express.Router();
+  var planRouter = express.Router();
 
   //Morgan allows us to automatically log requests and
   //responses
@@ -38,8 +39,11 @@ module.exports = function(app, express, passport){
   // use workoutRouter for workout requests
   app.use('/api/workouts', workoutRouter);
 
-  // use trybeRouter for workout requests
+  // use trybeRouter for trybe requests
   app.use('/api/trybes', trybeRouter);
+
+  // use planRouter for plan requests
+  app.use('/api/plans', planRouter);
 
   require('../users/passportConfig.js')(passport);
 
@@ -47,5 +51,5 @@ module.exports = function(app, express, passport){
   require('../users/userRoutes.js')(userRouter);
   require('../workout/workoutRoutes.js')(workoutRouter);
   require('../trybe/trybeRoutes.js')(trybeRouter);
-
+  require('../plan/planRoutes.js')(planRouter);
 };

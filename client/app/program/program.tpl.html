@@ -1,9 +1,7 @@
 <div class="program">
 
   <!-- Filters workouts by trybe -->
-  <select class="trybeDropDown" ng-model="data.trybe" ng-change="filterWorkouts()">
-    <option ng-repeat="trybe in data.trybes track by $index" value="{{trybe}}">{{trybe}}</option>
-  </select>
+  <select ng-model="data.trybe" ng-options="trybe for trybe in data.trybes" ng-change="filterWorkouts()" class="filter"></select>
 
   <!-- Create workout button sends user to workout module -->
   <div id="type" class="create" role="group" aria-label="...">

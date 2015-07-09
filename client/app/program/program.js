@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 16:57:05
+* @Last Modified time: 2015-07-08 17:37:09
 */
 
 'use strict';
@@ -39,14 +39,15 @@
         $scope.data.trybe;
         $scope.username = AuthFactory.getUsername();
         $scope.getAllWorkoutsAndTrybes();
-        // $scope.getSchedule();
       }
     };
 
     $scope.initializeTrybes = function(trybe) {
       if(!$scope.data.uniqTrybes.hasOwnProperty(trybe)) {
-        $scope.data.uniqTrybes[trybe] = trybe;
+        $scope.data.uniqTrybes[trybe] = 1;
         $scope.data.trybes.push(trybe);
+      } else {
+        $scope.data.uniqTrybes[trybe]++;
       }
     };
 
@@ -66,13 +67,13 @@
           });
 
           // Traverse workouts to init trybes,
-          // and show only uncompleted workouts from one trybe
           allWorkouts.forEach(function(workout){
             $scope.initializeTrybes(workout.trybe);
           });
 
           $scope.data.allWorkouts = allWorkouts;
 
+          //After retrieving all trybes' workouts, filter
           $scope.filterWorkouts();
         })
         .catch(function(error){
@@ -81,8 +82,16 @@
     };
 
     $scope.filterWorkouts = function() {
-      //If user hasn't selected trybe yet, select first
-      $scope.data.trybe = $scope.data.trybe || $scope.data.trybes[0];
+      //If user hasn't chosen trybe, choose trybe with most workouts
+      if(!$scope.data.trybe) {
+        var max = 0;
+        for(var trybe in $scope.data.uniqTrybes) {
+          if($scope.data.uniqTrybes[trybe] > max) {
+            max = $scope.data.uniqTrybes[trybe];
+            $scope.data.trybe = trybe;
+          }
+        }
+      }
 
       //Only show uncompleted workouts from one trybe
       $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
@@ -93,6 +102,7 @@
         }
       });
 
+      //Render each trybe's specific schedule
       $scope.getSchedule();
     };
 

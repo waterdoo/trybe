@@ -2,10 +2,44 @@
 
   <!-- Enable user to plan days -->
   <div>
-    <div class="trybesPlan" ng-repeat="trybe in data.trybes">
-      <span>{{trybe}} days: </span>
-      <span>1, 3, 5</span>
-      <span>edit</span>
+    <div class="trybesPlan">
+      <table class="checkboxes">
+        <!-- If not in edit mode, show days assigned to trybes -->
+        <tr ng-if="!editMode" ng-repeat="trybe in data.trybes track by $index">
+          <td>{{trybe}} Days: </td>
+          <td>1, 3, 5</td>
+        </tr>
+
+        <!-- If in edit mode, show selection options -->
+        <tr ng-if="editMode">
+          <td></td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+        </tr>
+        <tr ng-if="editMode" ng-repeat="trybe in data.trybes track by $index">
+          <td> {{trybe}} days: </td>
+
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day1"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day2"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day3"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day4"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day5"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day6"></td>
+          <td><input type="checkbox" ng-model="checkboxModel[$index].day7"></td>
+        </tr>
+
+      </table>
+    </div>
+
+    <!-- Edit button allows user to edit plan -->
+    <div>
+      <span ng-click="toggleEdit()">Edit</span>
+      <span ng-if="editMode" ng-click="savePlan()">Save</span>
     </div>
   </div>
 

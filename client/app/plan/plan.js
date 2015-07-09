@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 15:09:32
+* @Last Modified time: 2015-07-09 16:56:33
 */
 
 'use strict';
@@ -26,7 +26,7 @@
    * controls feed state from client side
    * @param {angular} $scope
    */
-  var PlanCtrl = function ($scope, $location, $state, $window, ProgramFactory, AuthFactory, NavFactory) {
+  var PlanCtrl = function ($scope, $location, $state, $window, ProgramFactory, PlanFactory, AuthFactory, NavFactory) {
 
     $scope.init = function() {
       if(!AuthFactory.isAuth()) {
@@ -38,6 +38,8 @@
         $scope.data.uniqTrybes = {};
         $scope.data.trybes = [];
         $scope.data.trybe;
+        $scope.data.editMode = false;
+        $scope.checkboxModel = {};
         $scope.username = AuthFactory.getUsername();
         $scope.getAllWorkoutsAndTrybes();
       }
@@ -53,7 +55,7 @@
     };
 
     $scope.getAllWorkoutsAndTrybes = function(trybe) {
-      ProgramFactory.getAllWorkouts($scope.username)
+      PlanFactory.getAllWorkouts($scope.username)
         .then(function(allWorkouts){
 
           //Sort workouts by order prop
@@ -82,8 +84,42 @@
         });
     };
 
+    $scope.toggleEdit = function() {
+      $scope.editMode = !$scope.editMode;
+    };
+
     $scope.viewTrybes = function() {
       NavFactory.navigateTo('program');
+    };
+
+    $scope.savePlan = function() {
+      $scope.editMode = false;
+
+      var plan = {
+        day1: [],
+        day2: [],
+        day3: [],
+        day4: [],
+        day5: [],
+        day6: [],
+        day7: []
+      };
+
+      //Populate plan by traversing checkboxModel
+      //Loop through checkboxModel for i = number of trybes
+      for(var i = 0; i < $scope.data.trybes.length; i++) {
+        //Loop through 7 days, looking for true values
+        for(var dayNum = 1; dayNum <= 7; dayNum++) {
+          //If find true, push trybe name to corresponding day
+          if($scope.checkboxModel[i] &&
+            $scope.checkboxModel[i]['day' + dayNum]) {
+            plan['day' + dayNum].push($scope.data.trybes[i]);
+          }
+        }
+      }
+
+
+
     };
 
     $scope.filterWorkouts = function() {
@@ -112,11 +148,11 @@
     };
 
     $scope.getSchedule = function() {
-      ProgramFactory.getTrybeSchedule($scope.data.trybe)
+      PlanFactory.getTrybeSchedule($scope.data.trybe)
         .then(function(schedule){
           $scope.data.days = schedule.days || 5;
           $scope.data.weeks = schedule.weeks || 12;
-          console.log('in program module, schedule retrieved:', schedule);
+          console.log('in plan module, schedule retrieved:', schedule);
         })
         .catch(function(error){
           console.error(error);
@@ -142,29 +178,6 @@
 
       return html;
     },
-
-    //Sends workout data from user's selection to createProgram module
-    $scope.editProgram = function(index) {
-      var isNewWorkout;
-      var selection;
-      var isForProgram;
-
-      //If user selected a pre-existing workout,
-      //save workout and send to workout factory
-      if(index !== undefined) {
-        selection = $scope.data.workouts[index];
-        isNewWorkout = false;
-        isForProgram = false;
-      } else {
-      //Else load blank workout
-        selection = null;
-        isNewWorkout = true;
-        isForProgram = true;
-      }
-      console.log('selected workout:', selection);
-      ProgramFactory.sendWorkout(selection, isNewWorkout, isForProgram);
-      $state.go('createProgram');
-    };
 
     $scope.init();
   };

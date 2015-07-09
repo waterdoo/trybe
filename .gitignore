@@ -37,3 +37,6 @@ vendor/
 # IDE, editor, and OS-specific files
 .DS_Store
 *.sublime-workspace
+
+# Migration files
+*migration.js

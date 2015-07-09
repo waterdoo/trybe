@@ -1,0 +1,71 @@
+// With regard to Bootstrap, app modules are positioned as
+// rows with nested spans, which divide rows horizontally.
+.program {
+  @include make-xs-column(12);
+  @include make-xs-column-offset(0);
+  @include make-sm-column(8);
+  @include make-sm-column-offset(2);
+  @include make-md-column(4);
+  @include make-md-column-offset(4);
+  @include make-lg-column(4);
+  @include make-lg-column-offset(4);
+
+  .nextUp {
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 16px;
+  }
+
+  background-color: $brand-background;
+
+  .create {
+    font-size: 14px;
+    margin: 10px 0 10px 0;
+    text-align: center;
+  }
+
+  .view {
+    text-align: center;
+    margin: 20px 0 20px 0;
+  }
+
+  .workout {
+    margin: 10px 0 10px 0;
+    padding: 10px 5px 10px 5px;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e5e6e9;
+
+    .user-trybe-post {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .exercises {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .description {
+      white-space: pre-wrap;
+    }
+
+    .liftResult {
+      margin-left: 20px;
+    }
+
+
+    .tryButton {
+      width: 10%;
+      position: relative;
+      text-align: center;
+      border: none;
+      margin: 20px 0 0 0;
+      color: $brand-primary;
+      background-color: #fff;
+      font-family: 'ubuntu';
+      font-size: 16px;
+    }
+  }
+}

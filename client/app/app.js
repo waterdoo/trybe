@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-05 10:16:27
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-03 17:19:09
+* @Last Modified time: 2015-07-09 14:47:31
 */
 
 'use strict';
@@ -50,6 +50,7 @@
       'trybe-app.feed',
       'trybe-app.createProgram',
       'trybe-app.program',
+      'trybe-app.plan',
       'trybe-app.login',
       'trybe-app.profile',
       'trybe-app.common'

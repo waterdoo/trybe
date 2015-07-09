@@ -1,0 +1,39 @@
+<div class="program">
+
+  <!-- Filters workouts by trybe -->
+  <select ng-model="data.trybe" ng-options="trybe for trybe in data.trybes" ng-change="filterWorkouts()" class="filter"></select>
+
+  <!-- Create workout button sends user to workout module -->
+  <div id="type" class="create" role="group" aria-label="...">
+    <button type="button" ng-click="editProgram()" class="btn btn-default create">Edit Programs</button>
+  </div>
+
+  <div class="nextUp">Next Up</div>
+
+  <!-- Shows all workouts in program -->
+  <div class="workouts" ng-repeat="workout in data.workouts track by $index">
+    <div class="workout">
+      <!-- Show workout descr -->
+      <div class="user-trybe-post"><span>{{ renderWeekAndDay(workout.order) }}</span></div>
+      <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
+      <div><span class="description">{{ workout.description }}</span></div>
+
+      <!-- Repeats through exercises in workout, shows sets & reps if a lift -->
+      <div class="exercises" ng-repeat="exercise in workout.exercises track by $index">
+        <div><span>{{ exercise.exerciseName }}</span></div>
+          <div><span ng-if="workout.type === 'lift'">{{exercise.quantity[0]}} Sets, {{exercise.quantity[1]}} Reps</span></div>
+          <div><span ng-if="workout.type === 'lift'" class="liftResult">Max: {{ exercise.result }} </span></div>
+      </div>
+
+      <!-- Show result if a metcon or benchmark with result val -->
+      <div><span ng-if="workout.type !== 'lift' && workout.finalResult.value"> {{ workout.finalResult.type }}: {{ workout.finalResult.value }} </span></div>
+
+      <div id="type" role="group" aria-label="..." class="tryButtonContainer">
+        <button type="button" ng-click="editProgram($index)" class="btn-block tryButton">edit</button>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

@@ -1,8 +1,8 @@
 /*
 * @Author: VINCE
-* @Date:   2015-07-09 11:34:08
+* @Date:   2015-07-09 13:12:15
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 13:15:35
+* @Last Modified time: 2015-07-09 13:15:13
 */
 
 'use strict';
@@ -13,7 +13,7 @@ var Day = require('../models').day;
 var Plan = require('../models').plan;
 
 module.exports = {
-  getPlan: function(req, res, next) {
+  getDays: function(req, res, next) {
     // var trybeName = req.headers['x-access-trybe'];
     // console.log('trybeController trybeName:', trybeName);
     // var schedule = {};
@@ -26,7 +26,7 @@ module.exports = {
     // })
   },
 
-  setPlan: function(req, res, next) {
+  setDays: function(req, res, next) {
     // var username = req.body.username;
     // var trybeName = req.body.name;
     // var days = req.body.days;

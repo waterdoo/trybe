@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-05 16:15:10
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 12:07:44
+* @Last Modified time: 2015-07-09 13:27:05
 */
 
 'use strict';
@@ -11,6 +11,7 @@ var LocalStrategy = require ('passport-local').Strategy;
 var User = require('../models').user;
 var Trybe = require('../models').trybe;
 var Plan = require('../models').plan;
+var Day = require('../models').day;
 
 module.exports = function(passport){
 
@@ -65,7 +66,18 @@ passport.use('local-signup', new LocalStrategy(
               });
             });
             //set new plan for user
-            Plan.build({UserId: user.get('id')}).save()
+            Plan.build({UserId: user.get('id')})
+            .save()
+            //create 7 days for each user
+            .then(function(plan){
+              for(var i = 1; i <= 7; i++) {
+                Day.build({
+                  PlanId: plan.get('id'),
+                  val: i
+                })
+                .save()
+              }
+            })
             return done(null, user);
           })
           .catch(function(err){ // error handling

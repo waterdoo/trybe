@@ -2,7 +2,7 @@
 * @Author: vokoshyv
 * @Date:   2015-05-05 10:14:44
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 11:32:50
+* @Last Modified time: 2015-07-09 13:17:13
 */
 'use strict';
 //this file will be used to interpret and route http requests
@@ -18,6 +18,7 @@ module.exports = function(app, express, passport){
   var workoutRouter = express.Router();
   var trybeRouter = express.Router();
   var planRouter = express.Router();
+  var dayRouter = express.Router();
 
   //Morgan allows us to automatically log requests and
   //responses
@@ -45,6 +46,9 @@ module.exports = function(app, express, passport){
   // use planRouter for plan requests
   app.use('/api/plans', planRouter);
 
+  // use dayRouter for day requests
+  app.use('/api/days', dayRouter);
+
   require('../users/passportConfig.js')(passport);
 
   // inject routers into their respective route files
@@ -52,4 +56,5 @@ module.exports = function(app, express, passport){
   require('../workout/workoutRoutes.js')(workoutRouter);
   require('../trybe/trybeRoutes.js')(trybeRouter);
   require('../plan/planRoutes.js')(planRouter);
+  require('../day/dayRoutes.js')(dayRouter);
 };

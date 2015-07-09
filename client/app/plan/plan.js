@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 14:52:22
+* @Last Modified time: 2015-07-09 15:09:32
 */
 
 'use strict';
@@ -80,6 +80,10 @@
         .catch(function(error){
           console.error(error);
         });
+    };
+
+    $scope.viewTrybes = function() {
+      NavFactory.navigateTo('program');
     };
 
     $scope.filterWorkouts = function() {

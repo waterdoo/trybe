@@ -1,11 +1,17 @@
 <div class="program">
 
-  <!-- Filters workouts by trybe -->
-  <select ng-model="data.trybe" ng-options="trybe for trybe in data.trybes" ng-change="filterWorkouts()" class="filter"></select>
+  <!-- Enable user to plan days -->
+  <div>
+    <div class="trybesPlan" ng-repeat="trybe in data.trybes">
+      <span>{{trybe}} days: </span>
+      <span>1, 3, 5</span>
+      <span>edit</span>
+    </div>
+  </div>
 
-  <!-- Create workout button sends user to workout module -->
-  <div id="type" class="create" role="group" aria-label="...">
-    <button type="button" ng-click="editProgram()" class="btn btn-default create">Edit Programs</button>
+  <!-- Sends user to trybe programs -->
+  <div id="type" class="sendToTrybes" role="group" aria-label="...">
+    <button type="button" ng-click="viewTrybes()" class="btn btn-default create">View trybes</button>
   </div>
 
   <div class="nextUp">Next Up</div>

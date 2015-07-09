@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-03 17:09:46
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 17:12:50
+* @Last Modified time: 2015-07-08 17:44:56
 */
 
 'use strict';
@@ -171,7 +171,7 @@
       $scope.workout.finalResult.type = type;
     };
 
-    $scope.save = function() {
+    $scope.saveUserEntries = function() {
       //If user inputs a new exercise, add for them
       if($scope.temp && $scope.temp.exName) {
         $scope.addExercise();
@@ -186,6 +186,10 @@
       if($scope.isCreatingProgram) {
         $scope.setOrderVal();
       }
+    };
+
+    $scope.save = function() {
+      $scope.saveUserEntries();
 
       //Finalize workout object
       $scope.workout.username = AuthFactory.getUsername();
@@ -214,6 +218,7 @@
     };
 
     $scope.finishProgram = function() {
+      $scope.save();
       $state.go('program')
     };
 

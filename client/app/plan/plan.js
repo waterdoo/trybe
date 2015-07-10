@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 17:09:05
+* @Last Modified time: 2015-07-10 10:35:21
 */
 
 'use strict';
@@ -55,7 +55,7 @@
     };
 
     $scope.getAllWorkoutsAndTrybes = function(trybe) {
-      PlanFactory.getAllWorkouts($scope.username)
+      ProgramFactory.getAllWorkouts($scope.username)
         .then(function(allWorkouts){
 
           //Sort workouts by order prop
@@ -75,6 +75,7 @@
           });
 
           $scope.data.allWorkouts = allWorkouts;
+          console.log('plan module workouts:', allWorkouts);
 
           //After retrieving all trybes' workouts, filter
           $scope.filterWorkouts();
@@ -122,7 +123,6 @@
       }
 
       PlanFactory.savePlanSettings(planReq);
-
     };
 
     $scope.filterWorkouts = function() {
@@ -147,15 +147,13 @@
       });
 
       //Render each trybe's specific schedule
-      $scope.getSchedule();
+      $scope.getPlan();
     };
 
-    $scope.getSchedule = function() {
-      PlanFactory.getTrybeSchedule($scope.data.trybe)
-        .then(function(schedule){
-          $scope.data.days = schedule.days || 5;
-          $scope.data.weeks = schedule.weeks || 12;
-          console.log('in plan module, schedule retrieved:', schedule);
+    $scope.getPlan = function() {
+      PlanFactory.getPlan($scope.username)
+        .then(function(plan){
+          console.log('in plan module, plan retrieved:', plan);
         })
         .catch(function(error){
           console.error(error);

@@ -2,7 +2,7 @@
 * @Author: nimi
 * @Date:   2015-05-04 16:41:47
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-08 16:27:58
+* @Last Modified time: 2015-07-10 11:18:42
 */
 'use strict';
 
@@ -162,8 +162,8 @@ module.exports = {
                   };
                   workoutsArray.push(workoutObj);
                   innerNext();// this callback lets the async each know to move on to the next value
-                });
-              });
+                }); //User.find
+              }); //Exercise.findAll
             }, function(err){ // this function gets called when the async each is done going through all the workouts
               if(err){
                 console.error(err);

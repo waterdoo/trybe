@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-09 16:51:31
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 17:01:16
+* @Last Modified time: 2015-07-10 11:00:28
 */
 
 'use strict';
@@ -15,28 +15,15 @@
    * @param {[angular]} $window
    */
   var PlanFactory = function ($http, $location, $window) {
-    var getTrybeSchedule = function(trybeName) {
+    var getPlan = function(username) {
       return $http({
         method: 'GET',
-        url: '/api/trybes/schedule',
-        headers: { 'x-access-trybe': trybeName }
+        url: '/api/plans',
+        headers: { 'x-access-username': username}
       })
       .then(function(resp) {
-        console.log('in getTrybeSchedule, resp:', resp);
+        console.log('in PlanFactory getPlan, resp:', resp);
         return resp.data;
-      });
-    };
-
-    var getAllWorkouts = function(username) {
-      return $http({
-        method: 'GET',
-        url: '/api/workouts/all',
-        headers: { 'x-access-username': username }
-      })
-      .then(function (resp) {
-        console.log('in plan factory, getAllWorkouts:', resp);
-        parseWorkouts(resp.data);
-        return resp.data; //sends back data to controller
       });
     };
 
@@ -66,8 +53,7 @@
     };
 
     return {
-      getTrybeSchedule: getTrybeSchedule,
-      getAllWorkouts: getAllWorkouts,
+      getPlan: getPlan,
       savePlanSettings: savePlanSettings,
       parseWorkouts: parseWorkouts
     };

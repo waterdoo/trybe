@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-09 11:34:08
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 18:02:46
+* @Last Modified time: 2015-07-09 18:06:03
 */
 
 'use strict';
@@ -29,14 +29,6 @@ module.exports = {
 
   setPlan: function(req, res, next) {
     var planReq = req.body;
-    // {
-    //     username: 'example',
-    //     plan: {
-    //         day1: ['HR 26/27', 'Parkour'],
-    //         day2: ['HR 26/27', 'Parkour'],
-    //         day3: ['HR 26/27', 'Parkour']
-    //     }
-    // }
 
     User.find({where: {username: planReq.username}})
     .then(function(user){

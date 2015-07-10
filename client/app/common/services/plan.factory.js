@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-09 16:51:31
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 16:53:55
+* @Last Modified time: 2015-07-09 17:01:16
 */
 
 'use strict';
@@ -40,16 +40,15 @@
       });
     };
 
-
-    var saveTrybeSettings = function(settings) {
-      console.log('plan factory, saveTrybeSettings');
+    var savePlanSettings = function(plan) {
+      console.log('plan factory, savePlanSettings');
       return $http({
         method: 'POST',
-        url: '/api/trybes/schedule',
-        data: settings
+        url: '/api/plans/',
+        data: plan
       })
         .then(function(response){
-          console.log('Workout added', response);
+          console.log('Plan set', response);
           return response.data;
         });
     };
@@ -69,7 +68,7 @@
     return {
       getTrybeSchedule: getTrybeSchedule,
       getAllWorkouts: getAllWorkouts,
-      saveTrybeSettings: saveTrybeSettings,
+      savePlanSettings: savePlanSettings,
       parseWorkouts: parseWorkouts
     };
   };

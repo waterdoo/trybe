@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-09 16:56:33
+* @Last Modified time: 2015-07-09 17:09:05
 */
 
 'use strict';
@@ -95,14 +95,17 @@
     $scope.savePlan = function() {
       $scope.editMode = false;
 
-      var plan = {
-        day1: [],
-        day2: [],
-        day3: [],
-        day4: [],
-        day5: [],
-        day6: [],
-        day7: []
+      var planReq = {
+        username: $scope.username,
+        plan: {
+          day1: [],
+          day2: [],
+          day3: [],
+          day4: [],
+          day5: [],
+          day6: [],
+          day7: []
+        }
       };
 
       //Populate plan by traversing checkboxModel
@@ -110,15 +113,15 @@
       for(var i = 0; i < $scope.data.trybes.length; i++) {
         //Loop through 7 days, looking for true values
         for(var dayNum = 1; dayNum <= 7; dayNum++) {
-          //If find true, push trybe name to corresponding day
+          //If find true vals, push trybe to corresponding day
           if($scope.checkboxModel[i] &&
             $scope.checkboxModel[i]['day' + dayNum]) {
-            plan['day' + dayNum].push($scope.data.trybes[i]);
+            planReq['plan']['day' + dayNum].push($scope.data.trybes[i]);
           }
         }
       }
 
-
+      PlanFactory.savePlanSettings(planReq);
 
     };
 

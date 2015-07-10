@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-09 16:51:31
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-10 11:00:28
+* @Last Modified time: 2015-07-10 14:52:15
 */
 
 'use strict';
@@ -22,13 +22,11 @@
         headers: { 'x-access-username': username}
       })
       .then(function(resp) {
-        console.log('in PlanFactory getPlan, resp:', resp);
         return resp.data;
       });
     };
 
     var savePlanSettings = function(plan) {
-      console.log('plan factory, savePlanSettings');
       return $http({
         method: 'POST',
         url: '/api/plans/',

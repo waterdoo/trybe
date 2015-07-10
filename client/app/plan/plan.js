@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-06-29 19:49:20
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-10 12:33:28
+* @Last Modified time: 2015-07-10 14:55:39
 */
 
 'use strict';
@@ -42,16 +42,6 @@
         $scope.checkboxModel = {};
         $scope.username = AuthFactory.getUsername();
         $scope.getAllWorkoutsAndTrybes();
-        $scope.getPlan();
-      }
-    };
-
-    $scope.initializeTrybes = function(trybe) {
-      if(!$scope.data.uniqTrybes.hasOwnProperty(trybe)) {
-        $scope.data.uniqTrybes[trybe] = 1;
-        $scope.data.trybes.push(trybe);
-      } else {
-        $scope.data.uniqTrybes[trybe]++;
       }
     };
 
@@ -78,13 +68,112 @@
           $scope.data.allWorkouts = allWorkouts;
           console.log('plan module workouts:', allWorkouts);
 
-          //After retrieving all trybes' workouts, organize
-          $scope.organizeByDay();
+          $scope.getPlan();
         })
         .catch(function(error){
           console.error(error);
         });
     };
+
+    $scope.initializeTrybes = function(trybe) {
+      if(!$scope.data.uniqTrybes.hasOwnProperty(trybe)) {
+        $scope.data.uniqTrybes[trybe] = 1;
+        $scope.data.trybes.push(trybe);
+      } else {
+        $scope.data.uniqTrybes[trybe]++;
+      }
+    };
+
+    $scope.getPlan = function() {
+      PlanFactory.getPlan($scope.username)
+        .then(function(plan){
+          console.log('in plan module, plan:', plan);
+          $scope.data.plan = plan;
+          $scope.assignDays();
+        })
+        .catch(function(error){
+          console.error(error);
+        });
+    };
+
+    $scope.assignDays = function() {
+      //Initialize trybeDays object to store each trybe's index and days
+      var trybeDays = {};
+      for(var j = 0; j < $scope.data.trybes.length; j++) {
+        var trybe = $scope.data.trybes[j];
+        trybeDays[$scope.data.trybes[j]] = {
+          index: j,
+          days: []
+        }
+      }
+
+      //Run through each day, assign days to trybe
+      for(var day = 1; day <= 7; day++) {
+        //Find trybes assigned to each day,
+        //and corresponding arr val of it
+        for(var trybeIndex = 0; trybeIndex < $scope.data.plan[day].length; trybeIndex++) {
+          //Add day val to trybeDay's day prop
+          var trybe = $scope.data.plan[day][trybeIndex];
+          trybeDays[trybe]['days'].push(day);
+        }
+      }
+
+      $scope.data.trybeDays = trybeDays;
+      console.log('trybeDays', trybeDays);
+
+      //After retrieving workouts, user plan, and assigning days, organize.
+      $scope.organizeByDay();
+    };
+
+    $scope.renderDays = function(index) {
+      var trybe = $scope.data.trybes[index];
+      var daysOfTrybe;
+      var html = '';
+
+      //Load trybeDays from $scope, or if not existing yet,
+      //create object structure
+      if($scope.data.trybeDays) {
+        daysOfTrybe = $scope.data.trybeDays[trybe].days;
+      } else {
+        $scope.data.trybeDays = {};
+        for(var j = 0; j < $scope.data.trybes.length; j++) {
+          var trybeInstance = $scope.data.trybes[j];
+          $scope.data.trybeDays[trybeInstance] = {
+            index: j,
+            days: []
+          }
+        }
+        daysOfTrybe = $scope.data.trybeDays[trybe].days;
+      }
+
+      //Run through trybe's assigned days and add to html
+      for(var i = 0; i < daysOfTrybe.length; i++) {
+        var dayVal = daysOfTrybe[i];
+        if (i === 0) {
+          html += dayVal;
+        } else if (i === daysOfTrybe.length) {
+          html += dayVal;
+        } else {
+          html += ', ' + dayVal;
+        }
+      }
+
+      return html;
+    };
+
+    $scope.organizeByDay = function() {
+      $scope.data.workouts = $scope.data.allWorkouts;
+
+      // //Only show uncompleted workouts
+      // $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
+      //   if(element.trybe === $scope.data.trybe && element.completed !== true) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // });
+    };
+
 
     $scope.toggleEdit = function() {
       $scope.editMode = !$scope.editMode;
@@ -124,57 +213,6 @@
       }
 
       PlanFactory.savePlanSettings(planReq);
-    };
-
-    //Enable later
-    $scope.setCheckBoxModel = function() {
-      var mapTrybeIndexVals = {};
-
-      for(var index = 0; index < $scope.data.trybes.length; index++) {
-        mapTrybeIndexVals[$scope.data.trybes[index]] = index;
-      }
-
-      //Run through each day
-      for(var i = 1; i <= 7; i++) {
-        //Find trybes of each day,
-        //and corresponding arr val of it
-        for(var n = 0; n < $scope.data.plan[i].length; n++) {
-          //set index val === dayVal to true
-          var trybe = $scope.data.plan[i][n];
-          var trybeCheckBoxIndex = mapTrybeIndexVals[trybe];
-          console.log('checkBoxModel trybe found:', trybe, 'for day:', i);
-          console.log('trybeCheckBoxIndex:', trybeCheckBoxIndex);
-          console.log('scopeCheckBoxModel', $scope.checkboxModel);
-          //index vals not yet defined
-          $scope.checkboxModel[trybeCheckBoxIndex]['day' + i] = true;
-        }
-      }
-    };
-
-    $scope.organizeByDay = function() {
-      $scope.data.workouts = $scope.data.allWorkouts;
-
-      // //Only show uncompleted workouts
-      // $scope.data.workouts = $scope.data.allWorkouts.filter(function(element, index, array) {
-      //   if(element.trybe === $scope.data.trybe && element.completed !== true) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // });
-    };
-
-    $scope.getPlan = function() {
-      PlanFactory.getPlan($scope.username)
-        .then(function(plan){
-          console.log('in plan module, plan:', plan);
-          $scope.data.plan = plan;
-          // $scope.setCheckBoxModel(); enable later
-        })
-        .catch(function(error){
-          console.error(error);
-        });
-
     };
 
     $scope.renderWeekAndDay = function(workoutNum) {

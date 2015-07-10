@@ -7,7 +7,7 @@
         <!-- If not in edit mode, show days assigned to trybes -->
         <tr ng-if="!editMode" ng-repeat="trybe in data.trybes track by $index">
           <td>{{trybe}} Days: </td>
-          <td>1, 3, 5</td>
+          <td>{{renderDays($index)}}</td>
         </tr>
 
         <!-- If in edit mode, show selection options -->

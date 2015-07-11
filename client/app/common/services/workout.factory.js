@@ -2,7 +2,7 @@
 * @Author: vincetam
 * @Date:   2015-05-06 18:01:45
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-06 12:29:42
+* @Last Modified time: 2015-07-11 10:31:07
 */
 
 'use strict';
@@ -41,7 +41,7 @@
         headers: { 'x-access-username': username }
       })
       .then(function (resp) {
-        console.log('getMyWorkout factory resp:', resp);
+        console.log('getLogWorkouts factory resp:', resp);
         parseWorkouts(resp.data);
         var logWorkouts = resp.data.filter(function(element, index, array) {
           if(element.trybe === username + 'log') {

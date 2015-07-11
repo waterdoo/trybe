@@ -2,7 +2,7 @@
 * @Author: justinwebb
 * @Date:   2015-05-04 15:54:33
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-11 10:38:45
+* @Last Modified time: 2015-07-11 10:55:18
 */
 
 'use strict';
@@ -62,9 +62,9 @@
 
     $scope.sortWorkouts = function() {
       var compare = function(a,b) {
-        if (a.last_nom < b.last_nom)
+        if (a.date < b.date)
           return -1;
-        if (a.last_nom > b.last_nom)
+        if (a.date > b.date)
           return 1;
         return 0;
       }

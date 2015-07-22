@@ -7,7 +7,7 @@
         <!-- If not in edit mode, show days assigned to trybes -->
         <tr ng-if="!editMode" ng-repeat="trybe in data.trybes track by $index">
           <td>{{trybe}} Days: </td>
-          <td>{{renderDays($index)}}</td>
+          <td>{{renderDaysAssigned($index)}}</td>
         </tr>
 
         <!-- If in edit mode, show selection options -->
@@ -54,6 +54,7 @@
   <div class="workouts" ng-repeat="workout in data.workouts track by $index">
     <div class="workout">
       <!-- Show workout descr -->
+      <div class="user-trybe-post"><span>{{ workout.trybe }}</span></div>
       <div class="user-trybe-post"><span>{{ renderWeekAndDay(workout.order) }}</span></div>
       <div><span ng-if="workout.type === 'benchmark'">{{ workout.title }}</span></div>
       <div><span class="description">{{ workout.description }}</span></div>

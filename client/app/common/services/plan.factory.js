@@ -2,7 +2,7 @@
 * @Author: VINCE
 * @Date:   2015-07-09 16:51:31
 * @Last Modified by:   VINCE
-* @Last Modified time: 2015-07-10 14:52:15
+* @Last Modified time: 2015-07-16 17:50:10
 */
 
 'use strict';
@@ -26,6 +26,17 @@
       });
     };
 
+    var getTrybeSchedules = function(trybes) {
+      return $http({
+        method: 'GET',
+        url: '/api/trybes/schedules',
+        headers: { 'x-access-trybes': trybes}
+      })
+      .then(function(resp) {
+        return resp.data;
+      });
+    };
+
     var savePlanSettings = function(plan) {
       return $http({
         method: 'POST',
@@ -38,22 +49,10 @@
         });
     };
 
-    var parseWorkouts = function(resp) {
-      resp.forEach(function(workout){
-        if(workout.type === 'lift') {
-          workout.exercises.forEach(function(ex){
-            ex.quantity = JSON.parse(ex.quantity);
-          });
-        } else {
-          workout.finalResult = JSON.parse(workout.finalResult);
-        }
-      });
-    };
-
     return {
       getPlan: getPlan,
+      getTrybeSchedules: getTrybeSchedules,
       savePlanSettings: savePlanSettings,
-      parseWorkouts: parseWorkouts
     };
   };
 
